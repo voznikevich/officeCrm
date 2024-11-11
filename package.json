@@ -7,7 +7,7 @@
     "start_script": "env-cmd -f .env.${ENV} node db/seeds/seed.js && env-cmd -f .env.${ENV} nodemon server.js",
     "check_env_and_start": "env-cmd -f .env.${ENV} nodemon server.js",
     "start_server": "NODE_ENV=${NODE_ENV} npm run db:migrate && NODE_ENV=${NODE_ENV} npm run db:seed && ENV=${ENV} npm run check_env_and_start",
-    "start": "concurrently \"NODE_ENV=${NODE_ENV} ENV=${ENV} npm run start_server\"",
+    "start": "nodemon server.js",
     "start:dev": "NODE_ENV=dev ENV=dev npm run start",
     "+++++++++++++++FORMAT_SCRIPT": "++++++++++++++++++++++++++++++",
     "format:check": "prettier --check \"./**/*.{js,ts,jsx,tsx,css,html}\"",
