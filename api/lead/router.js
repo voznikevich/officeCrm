@@ -5,26 +5,23 @@ const router = express.Router({});
 const asyncHandler = require('express-async-handler');
 const controller = require('./controller');
 
-router.post(
-    '/create-user',
-    validator.main(schemas.router.registration),
-    asyncHandler(middlewares.auth.admin),
-    asyncHandler(controller.registration)
-);
-
 router.get('/', asyncHandler(middlewares.auth.user), asyncHandler(controller.get));
 
-router.put(
-    '/put-user',
-    asyncHandler(middlewares.auth.admin),
-    validator.main(schemas.router.putUser),
-    asyncHandler(controller.putUser)
+router.post('/',
+    validator.main(schemas.router.post),
+    // asyncHandler(middlewares.auth.user),
+    asyncHandler(controller.post)
 );
 
-router.delete(
-    '/delete-user',
+router.put('/',
     asyncHandler(middlewares.auth.admin),
+    // validator.main(schemas.router.putUser),
+    asyncHandler(controller.put)
+);
+
+router.delete('/',
+    // asyncHandler(middlewares.auth.admin),
     validator.main(schemas.router.deleteUser),
-    asyncHandler(controller.deleteUser)
+    asyncHandler(controller.delete)
 );
 module.exports = router;

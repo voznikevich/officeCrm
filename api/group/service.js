@@ -1,8 +1,6 @@
-const bcrypt = require('bcryptjs');
-
 const helper = require('../../app/helpers/helper');
 
-const user = {
+const affiliate = {
     get: async (connection, user) => {
         const userData = await connection.Users.findOne({
             where: {id: user.id},
@@ -17,42 +15,21 @@ const user = {
         };
     },
 
-    registration: async (connection, options) => {
-        const candidate = await connection.Users.findOne({
-            where: {email: options.email}
-        });
-        if (candidate) {
-            return helper.doom.error.emailAlreadyRegistered();
-        }
-
-        const hashPassword = await bcrypt.hash(options.password, 10);
-
-        console.log(options)
-        await connection.Users.create({
+    post: async (connection, options) => {
+        await connection.Groups.create({
             ...options,
-            password: hashPassword
         });
 
         return {
             success: true,
             result: {
-                message: 'User successfully created'
+                message: 'Group successfully created'
             }
         };
     },
 
-    putUser: async (connection, options) => {
-        const user = await connection.Users.findOne({
-            where: {id: options.userId}
-        });
+    put: async (connection, options) => {
 
-        if (!user) {
-            return helper.doom.error.accountNotFound();
-        }
-
-        if (options.password) options.password = await bcrypt.hash(options.password, 10);
-
-        await user.update(options);
 
         return {
             success: true,
@@ -83,4 +60,4 @@ const user = {
     }
 };
 
-module.exports = user;
+module.exports = affiliate;

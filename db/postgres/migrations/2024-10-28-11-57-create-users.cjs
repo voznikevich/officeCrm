@@ -30,8 +30,14 @@ module.exports = {
                 allowNull: true,
             },
             group: {
-                type: Sequelize.ENUM('sales', 'reten', 'buyer'),
+                type: Sequelize.INTEGER,
                 allowNull: true,
+                references: {
+                    model: 'Groups',
+                    key: 'id',
+                },
+                onUpdate: 'CASCADE',
+                onDelete: 'SET NULL',
             },
             type: {
                 type: Sequelize.ENUM('head', 'shift', 'teamLead', 'user'),

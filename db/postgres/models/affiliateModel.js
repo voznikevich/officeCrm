@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize');
-
-module.exports = class Users extends Sequelize.Model {
+module.exports = class Affiliates extends Sequelize.Model {
     static init(sequelize, DataTypes) {
         return super.init(
             {
@@ -9,31 +8,24 @@ module.exports = class Users extends Sequelize.Model {
                     primaryKey: true,
                     autoIncrement: true
                 },
+                offerName: {
+                    type: DataTypes.STRING,
+                },
+                offer: {
+                    type: DataTypes.STRING,
+                },
+                url: {
+                    type: DataTypes.STRING,
+                },
                 userName: {
                     type: DataTypes.STRING,
-                    allowNull: false
                 },
-                email: {
+                referral: {
                     type: DataTypes.STRING,
-                    allowNull: false,
-                    unique: true
                 },
-                password: {
+                description: {
                     type: DataTypes.STRING,
-                    allowNull: false
                 },
-                refresh_token: {
-                    type: DataTypes.STRING,
-                    defaultValue: null
-                },
-                group: {
-                    type: DataTypes.ENUM('sales', 'reten', 'buyer'),
-                    defaultValue: null
-                },
-                type: {
-                    type: DataTypes.ENUM('head', 'shift', 'teamLead', 'user'),
-                    defaultValue: 'user'
-                }
             },
             {
                 sequelize,

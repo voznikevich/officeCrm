@@ -2,7 +2,7 @@ const service = require('./service');
 const {controller} = require('../../app/helpers/helper');
 const {StatusCodes} = require('http-status-codes');
 
-const user = {
+const affiliate = {
     get: async (req, res) => {
         await controller.sendJson(
             res,
@@ -13,31 +13,31 @@ const user = {
         );
     },
 
-    registration: async (req, res) => {
+    post: async (req, res) => {
         await controller.sendJson(
             res,
             async (connection) => {
-                return await service.registration(connection, req.options);
+                return await service.post(connection, req.options);
             },
             StatusCodes.OK
         );
     },
 
-    putUser: async (req, res) => {
+    put: async (req, res) => {
         await controller.sendJson(
             res,
             async (connection) => {
-                return await service.putUser(connection, req.options);
+                return await service.put(connection, req.options);
             },
             StatusCodes.OK
         );
     },
 
-    deleteUser: async (req, res) => {
+    delete: async (req, res) => {
         await controller.sendJson(
             res,
             async (connection) => {
-                return await service.deleteUser(connection, req.options);
+                return await service.delete(connection, req.options);
             },
             StatusCodes.OK
         );
@@ -46,4 +46,4 @@ const user = {
 
 };
 
-module.exports = user;
+module.exports = affiliate;

@@ -20,9 +20,9 @@ module.exports = {
 
     if (!existingAdmin) {
       await queryInterface.bulkInsert('Users', [adminData], { returning: true });
-      console.log('Admin user created and Page 1 inserted successfully');
+      console.log('Admin auth created and Page 1 inserted successfully');
     } else {
-      console.log('Admin user already exists');
+      console.log('Admin auth already exists');
     }
   },
 
