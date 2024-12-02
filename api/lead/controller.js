@@ -2,7 +2,7 @@ const service = require('./service');
 const {controller} = require('../../app/helpers/helper');
 const {StatusCodes} = require('http-status-codes');
 
-const user = {
+const lead = {
     get: async (req, res) => {
         await controller.sendJson(
             res,
@@ -46,4 +46,4 @@ const user = {
 
 };
 
-module.exports = user;
+module.exports = lead;

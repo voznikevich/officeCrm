@@ -2,7 +2,7 @@ const service = require('./service');
 const {controller} = require('../../app/helpers/helper');
 const {StatusCodes} = require('http-status-codes');
 
-const affiliate = {
+const group = {
     get: async (req, res) => {
         await controller.sendJson(
             res,
@@ -46,4 +46,4 @@ const affiliate = {
 
 };
 
-module.exports = affiliate;
+module.exports = group;

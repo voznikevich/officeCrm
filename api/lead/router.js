@@ -5,7 +5,9 @@ const router = express.Router({});
 const asyncHandler = require('express-async-handler');
 const controller = require('./controller');
 
-router.get('/', asyncHandler(middlewares.auth.user), asyncHandler(controller.get));
+router.get('/',
+    // asyncHandler(middlewares.auth.user),
+    asyncHandler(controller.get));
 
 router.post('/',
     validator.main(schemas.router.post),

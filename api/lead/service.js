@@ -1,18 +1,14 @@
-const bcrypt = require('bcryptjs');
-
 const helper = require('../../app/helpers/helper');
 
-const user = {
+const lead = {
     get: async (connection, user) => {
-        const userData = await connection.Users.findOne({
-            where: {id: user.id},
-            attributes: {exclude: ['password', 'refresh_token', 'createdAt', 'updatedAt']}
+        const leads = await connection.Leads.findAll({
         });
 
         return {
             success: true,
             result: {
-                user: userData
+                leads
             }
         };
     },
@@ -62,4 +58,4 @@ const user = {
     }
 };
 
-module.exports = user;
+module.exports = lead;
