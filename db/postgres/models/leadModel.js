@@ -84,6 +84,14 @@ module.exports = class Leads extends Sequelize.Model {
         );
     }
 
-    static associate() {
+    static associate(models) {
+        this.belongsTo(models.Affiliates, {
+            foreignKey: 'affiliate',
+            as: "affiliateData"
+        });
+        this.belongsTo(models.Users, {
+            foreignKey: 'manager',
+            as: "user"
+        });
     }
 };

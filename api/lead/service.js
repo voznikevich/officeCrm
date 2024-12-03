@@ -1,9 +1,59 @@
 const helper = require('../../app/helpers/helper');
 
 const lead = {
-    get: async (connection, user) => {
-        const leads = await connection.Leads.findAll({
+    get: async (connection, options) => {
+        const lead = await connection.Leads.findOne({
+            where: {id: options.leadId},
+            attributes: {exclude: ['affiliate', 'manager']},
+            include: [
+                {
+                    required: false,
+                    model: connection.Affiliates,
+                    as: "affiliateData",
+                },
+                {
+                    required: false,
+                    model: connection.Users,
+                    as: "user",
+                    attributes: {exclude: ['password', 'refresh_token']},
+
+                }
+            ]
         });
+
+        return {
+            success: true,
+            result: {
+                lead
+            }
+        };
+    },
+
+    all: async (connection, options) => {
+        const searchParams = {};
+
+        const leads = await connection.Leads.findAll(
+            {
+                attributes: {exclude: ['affiliate', 'manager']},
+                include: [
+                    {
+                        required: false,
+                        model: connection.Affiliates,
+                        as: "affiliateData",
+                    },
+                    {
+                        required: false,
+                        model: connection.Users,
+                        as: "user",
+                        attributes: {exclude: ['password', 'refresh_token']},
+
+                    }
+                ],
+                limit: options.limit || 10,
+                offset: options.page? (options.page  - 1) * options.limit : 0,
+                order: [['createdAt', 'DESC']],
+            }
+        );
 
         return {
             success: true,
@@ -21,40 +71,31 @@ const lead = {
         return {
             success: true,
             result: {
-                message: 'Leads successfully created'
+                message: 'Lead successfully created'
             }
         };
     },
 
     put: async (connection, options) => {
-
+        await connection.Leads.update({...options}, {
+            where: {id: options.leadId},
+        })
 
         return {
             success: true,
             result: {
-                message: 'User was successfully updated'
+                message: 'Lead was successfully updated'
             }
         };
-
     },
 
-    deleteUser: async (connection, options) => {
-        const existingUser = await connection.Users.findOne({where: {id: options.userId}});
-
-        if (!existingUser) {
-            return {
-                success: false,
-                result: {message: 'User does not exist'}
-            };
-        }
-
-        await connection.Users.destroy({where: {id: options.userId}})
+    delete: async (connection, options) => {
+        await connection.Leads.destroy({where: {id: options.leadId}})
 
         return {
             success: true,
-            result: {message: 'User was successfully deleted'}
+            result: {message: 'Lead was successfully deleted'}
         };
-
     }
 };
 

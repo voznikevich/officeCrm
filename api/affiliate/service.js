@@ -1,16 +1,32 @@
 const helper = require('../../app/helpers/helper');
 
 const affiliate = {
-    get: async (connection, user) => {
-        const userData = await connection.Users.findOne({
-            where: {id: user.id},
-            attributes: {exclude: ['password', 'refresh_token', 'createdAt', 'updatedAt']}
+    get: async (connection, options) => {
+        const affiliate = await connection.Affiliates.findOne({
+            where: {id: options.affiliateId},
         });
 
         return {
             success: true,
             result: {
-                user: userData
+                affiliate
+            }
+        };
+    },
+
+    all: async (connection, options) => {
+        const searchParams = {};
+
+        const affiliates = await connection.Affiliates.findAll({
+            limit: options.limit || 10,
+            offset: options.page ? (options.page - 1) * options.limit : 0,
+            order: [['createdAt', 'DESC']],
+        });
+
+        return {
+            success: true,
+            result: {
+                affiliates
             }
         };
     },
@@ -29,34 +45,25 @@ const affiliate = {
     },
 
     put: async (connection, options) => {
-
+        await connection.Affiliates.update({...options}, {
+            where: {id: options.affiliateId},
+        })
 
         return {
             success: true,
             result: {
-                message: 'User was successfully updated'
+                message: 'Affiliate was successfully updated'
             }
         };
-
     },
 
-    deleteUser: async (connection, options) => {
-        const existingUser = await connection.Users.findOne({where: {id: options.userId}});
-
-        if (!existingUser) {
-            return {
-                success: false,
-                result: {message: 'User does not exist'}
-            };
-        }
-
-        await connection.Users.destroy({where: {id: options.userId}})
+    delete: async (connection, options) => {
+        await connection.Affiliates.destroy({where: {id: options.affiliateId}})
 
         return {
             success: true,
-            result: {message: 'User was successfully deleted'}
+            result: {message: 'Affiliate was successfully deleted'}
         };
-
     }
 };
 

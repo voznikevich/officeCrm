@@ -2,6 +2,15 @@ const Joi = require('joi');
 
 const schemas = {
     router: {
+        get: Joi.object()
+            .keys({
+                leadId: Joi.number().required()
+            }),
+        all: Joi.object()
+            .keys({
+                limit: Joi.number().optional(),
+                page: Joi.number().optional()
+            }),
         post: Joi.object()
             .keys({
                 userName: Joi.string().required(),
@@ -28,6 +37,7 @@ const schemas = {
 
         put: Joi.object()
             .keys({
+                leadId: Joi.number().required(),
                 userName: Joi.string().optional(),
                 country: Joi.string().optional(),
                 language: Joi.string().optional(),
@@ -48,20 +58,9 @@ const schemas = {
             })
             .required(),
 
-        putUser: Joi.object()
+        delete: Joi.object()
             .keys({
-                userId: Joi.number().optional(),
-                email: Joi.string().email().optional(),
-                group: Joi.string()
-                    .valid('sales', 'reten', 'buyer').optional(),
-                userName: Joi.string().optional(),
-                password: Joi.string().optional(),
-            })
-            .required(),
-
-        deleteUser: Joi.object()
-            .keys({
-                userId: Joi.number().required()
+                leadId: Joi.number().required()
             })
             .required()
     }

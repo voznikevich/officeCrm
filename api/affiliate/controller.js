@@ -7,7 +7,17 @@ const affiliate = {
         await controller.sendJson(
             res,
             async (connection) => {
-                return await service.get(connection, req.user);
+                return await service.get(connection, req.options);
+            },
+            StatusCodes.OK
+        );
+    },
+
+    all: async (req, res) => {
+        await controller.sendJson(
+            res,
+            async (connection) => {
+                return await service.all(connection, req.options);
             },
             StatusCodes.OK
         );

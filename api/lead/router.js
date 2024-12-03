@@ -7,7 +7,13 @@ const controller = require('./controller');
 
 router.get('/',
     // asyncHandler(middlewares.auth.user),
+    validator.main(schemas.router.get),
     asyncHandler(controller.get));
+
+router.get('/all',
+    // asyncHandler(middlewares.auth.user),
+    validator.main(schemas.router.all),
+    asyncHandler(controller.all));
 
 router.post('/',
     validator.main(schemas.router.post),
@@ -23,7 +29,7 @@ router.put('/',
 
 router.delete('/',
     // asyncHandler(middlewares.auth.admin),
-    validator.main(schemas.router.deleteUser),
+    validator.main(schemas.router.delete),
     asyncHandler(controller.delete)
 );
 module.exports = router;
