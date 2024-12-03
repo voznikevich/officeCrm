@@ -17,7 +17,7 @@ const lead = {
         await controller.sendJson(
             res,
             async (connection) => {
-                return await service.all(connection, req.options);
+                return await service.all(connection, req.options, req.user);
             },
             StatusCodes.OK
         );

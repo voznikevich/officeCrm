@@ -28,6 +28,8 @@ const auth = () => {
 
         req.user = {};
         req.user.id = decode.sub;
+        req.user.type = decode.type;
+        req.user.group = decode.group;
         next();
     };
 };

@@ -9,7 +9,11 @@ const schemas = {
         all: Joi.object()
             .keys({
                 limit: Joi.number().optional(),
-                page: Joi.number().optional()
+                page: Joi.number().optional(),
+                dateRange: Joi.array()
+                    .items(Joi.string().isoDate())
+                    .length(2)
+                    .optional()
             }),
         post: Joi.object()
             .keys({
