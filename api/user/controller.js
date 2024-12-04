@@ -13,6 +13,16 @@ const user = {
         );
     },
 
+    all: async (req, res) => {
+        await controller.sendJson(
+            res,
+            async (connection) => {
+                return await service.all(connection, req.user);
+            },
+            StatusCodes.OK
+        );
+    },
+
     registration: async (req, res) => {
         await controller.sendJson(
             res,

@@ -14,6 +14,11 @@ router.post(
 
 router.get('/', asyncHandler(middlewares.auth.user), asyncHandler(controller.get));
 
+router.get('/all',
+    asyncHandler(middlewares.auth.admin),
+    // validator.main(schemas.router.all),
+    asyncHandler(controller.all));
+
 router.put(
     '/put-user',
     asyncHandler(middlewares.auth.admin),

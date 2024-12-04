@@ -17,6 +17,19 @@ const user = {
         };
     },
 
+    all: async (connection, user) => {
+        const users = await connection.Users.findAll({
+            attributes: {exclude: ['password', 'refresh_token', 'updatedAt']}
+        });
+
+        return {
+            success: true,
+            result: {
+                user: users
+            }
+        };
+    },
+
     registration: async (connection, options) => {
         const candidate = await connection.Users.findOne({
             where: {email: options.email}
