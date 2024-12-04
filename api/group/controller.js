@@ -7,7 +7,7 @@ const group = {
         await controller.sendJson(
             res,
             async (connection) => {
-                return await service.get(connection, req.user);
+                return await service.get(connection, req.options,req.user);
             },
             StatusCodes.OK
         );
@@ -17,7 +17,7 @@ const group = {
         await controller.sendJson(
             res,
             async (connection) => {
-                return await service.all(connection, req.user);
+                return await service.all(connection, req.options,req.user);
             },
             StatusCodes.OK
         );
@@ -27,7 +27,7 @@ const group = {
         await controller.sendJson(
             res,
             async (connection) => {
-                return await service.post(connection, req.options);
+                return await service.post(connection, req.options, req.user);
             },
             StatusCodes.OK
         );
@@ -37,7 +37,7 @@ const group = {
         await controller.sendJson(
             res,
             async (connection) => {
-                return await service.put(connection, req.options);
+                return await service.put(connection, req.options, req.user);
             },
             StatusCodes.OK
         );
@@ -47,7 +47,7 @@ const group = {
         await controller.sendJson(
             res,
             async (connection) => {
-                return await service.delete(connection, req.options);
+                return await service.delete(connection, req.options, req.user);
             },
             StatusCodes.OK
         );
