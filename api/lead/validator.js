@@ -10,6 +10,17 @@ const schemas = {
             .keys({
                 limit: Joi.number().optional(),
                 page: Joi.number().optional(),
+                status: Joi.string().valid(
+                    'new',
+                    'no answer',
+                    'newer answer',
+                    'slip away',
+                    'not interested',
+                    'no pot',
+                    'callback',
+                    'reassign',
+                    'active'
+                ).optional(),
                 dateRange: Joi.array()
                     .items(Joi.string().isoDate())
                     .length(2)

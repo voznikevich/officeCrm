@@ -3,6 +3,7 @@ const user = require('../../api/user/router');
 const lead = require('../../api/lead/router');
 const affiliate = require('../../api/affiliate/router');
 const group = require('../../api/group/router');
+const comment = require('../../api/comment/router');
 
 module.exports = {
     api: (app) => {
@@ -11,5 +12,6 @@ module.exports = {
         app.use('/lead', lead);
         app.use('/affiliate', affiliate);
         app.use('/group', group);
+        app.use('/comment', comment);
     }
 };

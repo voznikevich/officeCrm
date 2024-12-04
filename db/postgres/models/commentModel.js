@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-module.exports = class Users extends Sequelize.Model {
+module.exports = class Comments extends Sequelize.Model {
     static init(sequelize, DataTypes) {
         return super.init(
             {
@@ -42,6 +42,10 @@ module.exports = class Users extends Sequelize.Model {
         );
     }
 
-    static associate() {
+    static associate(models) {
+        this.belongsTo(models.Users, {
+            foreignKey: 'user',
+            as: "userData"
+        });
     }
 };

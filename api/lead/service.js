@@ -1,5 +1,6 @@
 const helper = require('../../app/helpers/helper');
 const {Op} = require("sequelize");
+const {Sequelize} = require("../../db/postgres/models");
 
 const lead = {
     get: async (connection, options) => {
@@ -34,6 +35,8 @@ const lead = {
         const dateRange = options.dateRange || [];
         const where = {};
 
+        if (options.status) where.status = options.status;
+
         if (dateRange.length === 2) {
             where.createdAt = {
                 [Op.gte]: dateRange[0],
@@ -43,23 +46,29 @@ const lead = {
 
         const limit = options.limit || 10;
         const offset = options.page ? (options.page - 1) * limit : 0;
-        const defaultAttributes = { exclude: ['affiliate', 'manager'] };
+        const defaultAttributes = {exclude: ['affiliate', 'manager', 'comment']};
         const defaultInclude = [
             {
                 required: false,
-                model: connection.Affiliates,
-                as: "affiliateData",
+                model: connection.Comments,
+                as: "lastComment",
+                attributes: ['id', 'message', 'createdAt']
             },
             {
                 required: false,
                 model: connection.Users,
                 as: "user",
-                attributes: { exclude: ['password', 'refresh_token'] },
-            }
+                attributes: {exclude: ['password', 'refresh_token']},
+            },
+            {
+                required: false,
+                model: connection.Affiliates,
+                as: "affiliateData",
+            },
         ];
 
         if (user.type === 'head' || user.type === 'shift') {
-            const { count, rows: leads } = await connection.Leads.findAndCountAll({
+            const {count, rows: leads} = await connection.Leads.findAndCountAll({
                 where,
                 attributes: defaultAttributes,
                 include: defaultInclude,
@@ -82,13 +91,13 @@ const lead = {
             const users = await connection.Users.findAll({
                 where: {
                     group: 1,
-                    type: { [Op.or]: ["user", "teamLead"] }
+                    type: {[Op.or]: ["user", "teamLead"]}
                 }
             });
 
-            where.manager = { [Op.in]: users.map(u => u.id) };
+            where.manager = {[Op.in]: users.map(u => u.id)};
 
-            const { count, rows: leads } = await connection.Leads.findAndCountAll({
+            const {count, rows: leads} = await connection.Leads.findAndCountAll({
                 where,
                 attributes: defaultAttributes,
                 include: defaultInclude,
@@ -110,7 +119,7 @@ const lead = {
         if (user.type === 'user') {
             where.manager = user.id;
 
-            const { count, rows: leads } = await connection.Leads.findAndCountAll({
+            const {count, rows: leads} = await connection.Leads.findAndCountAll({
                 where,
                 attributes: defaultAttributes,
                 include: defaultInclude,

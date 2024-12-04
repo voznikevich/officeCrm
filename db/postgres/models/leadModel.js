@@ -93,5 +93,9 @@ module.exports = class Leads extends Sequelize.Model {
             foreignKey: 'manager',
             as: "user"
         });
+        this.belongsTo(models.Comments, {
+            foreignKey: 'comment',
+            as: "lastComment"
+        });
     }
 };
