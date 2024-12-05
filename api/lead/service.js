@@ -153,8 +153,10 @@ const lead = {
     },
 
     put: async (connection, options) => {
+        const leadId = options.leadId;
+        delete options.leadId;
         await connection.Leads.update({...options}, {
-            where: {id: options.leadId},
+            where: {id: leadId},
         })
 
         return {
