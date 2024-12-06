@@ -4,9 +4,8 @@ module.exports = class Affiliates extends Sequelize.Model {
         return super.init(
             {
                 id: {
-                    type: DataTypes.INTEGER,
+                    type: DataTypes.BIGINT,
                     primaryKey: true,
-                    autoIncrement: true
                 },
                 offerName: {
                     type: DataTypes.STRING,

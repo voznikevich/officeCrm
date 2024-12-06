@@ -33,6 +33,7 @@ const affiliate = {
 
     post: async (connection, options) => {
         await connection.Affiliates.create({
+            id: helper.math.generateNumericUUID(),
             ...options,
         });
 

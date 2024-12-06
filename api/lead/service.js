@@ -36,6 +36,7 @@ const lead = {
         const where = {};
 
         if (options.status) where.status = options.status;
+        if (options.affiliateId) where.affiliate = options.affiliateId;
 
         if (dateRange.length === 2) {
             where.createdAt = {

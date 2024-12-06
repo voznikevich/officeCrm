@@ -2,9 +2,8 @@ module.exports = {
     up: async (queryInterface, Sequelize) => {
         await queryInterface.createTable('Affiliates', {
             id: {
-                type: Sequelize.INTEGER,
+                type: Sequelize.BIGINT,
                 primaryKey: true,
-                autoIncrement: true,
                 allowNull: false,
             },
             offerName: {

@@ -5,6 +5,7 @@ module.exports = {
   token: require('./token.helper'),
   validator: require('./validator.helper'),
   controller: require('./controller.helper'),
+  math: require('./math.helper'),
 
   middlewares: {
     auth: require('../middlewares/auth.handler'),

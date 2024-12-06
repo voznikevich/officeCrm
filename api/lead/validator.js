@@ -8,6 +8,7 @@ const schemas = {
             }),
         all: Joi.object()
             .keys({
+                affiliateId: Joi.number().optional(),
                 limit: Joi.number().optional(),
                 page: Joi.number().optional(),
                 status: Joi.string().valid(
