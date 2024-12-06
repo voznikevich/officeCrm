@@ -29,7 +29,7 @@ module.exports = {
                 allowNull: false,
             },
             affiliate: {
-                type: Sequelize.INTEGER,
+                type: Sequelize.BIGINT,
                 allowNull: true,
                 references: {
                     model: 'Affiliates',

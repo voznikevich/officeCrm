@@ -30,7 +30,7 @@ module.exports = class Leads extends Sequelize.Model {
                     allowNull: false
                 },
                 affiliate: {
-                    type: DataTypes.INTEGER,
+                    type: DataTypes.BIGINT,
                     allowNull: true,
                     references: {
                         model: 'Affiliates',
