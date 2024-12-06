@@ -1,5 +1,6 @@
 const http = require('http');
 const app = require('./app');
+const jwt = require("jsonwebtoken");
 
 require('dotenv').config();
 

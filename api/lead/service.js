@@ -36,7 +36,6 @@ const lead = {
         const where = {};
 
         if (options.status) where.status = options.status;
-        if (options.affiliateId) where.affiliate = options.affiliateId;
 
         if (dateRange.length === 2) {
             where.createdAt = {
@@ -119,6 +118,28 @@ const lead = {
 
         if (user.type === 'user') {
             where.manager = user.id;
+
+            const {count, rows: leads} = await connection.Leads.findAndCountAll({
+                where,
+                attributes: defaultAttributes,
+                include: defaultInclude,
+                limit,
+                offset,
+                order: [['createdAt', 'DESC']],
+            });
+
+            return {
+                success: true,
+                result: {
+                    total: count,
+                    totalPages: Math.ceil(count / limit),
+                    leads,
+                },
+            };
+        }
+
+        if (user.type === 'buyer') {
+            where.affiliate = options.affiliateId;
 
             const {count, rows: leads} = await connection.Leads.findAndCountAll({
                 where,

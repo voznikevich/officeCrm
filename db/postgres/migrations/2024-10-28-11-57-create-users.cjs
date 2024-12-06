@@ -40,7 +40,7 @@ module.exports = {
                 onDelete: 'SET NULL',
             },
             type: {
-                type: Sequelize.ENUM('head', 'shift', 'teamLead', 'user'),
+                type: Sequelize.ENUM('head', 'shift', 'teamLead', 'user', 'buyer'),
                 defaultValue: 'user',
                 allowNull: false,
             },
