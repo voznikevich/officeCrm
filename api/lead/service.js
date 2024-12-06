@@ -154,6 +154,7 @@ const lead = {
 
     put: async (connection, options) => {
         const leadId = options.leadId;
+        console.log(leadId)
         delete options.leadId;
         await connection.Leads.update({...options}, {
             where: {id: leadId},
