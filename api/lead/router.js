@@ -23,7 +23,7 @@ router.post('/',
 
 router.put('/',
     asyncHandler(middlewares.auth.admin),
-    // validator.main(schemas.router.putUser),
+    validator.main(schemas.router.put),
     asyncHandler(controller.put)
 );
 
