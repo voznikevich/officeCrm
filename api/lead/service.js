@@ -156,7 +156,7 @@ const lead = {
         const leadId = options.leadId;
         delete options.leadId;
         await connection.Leads.update({...options}, {
-            where: {id: leadId},
+            where: {id: options.leadId},
         })
 
         return {
