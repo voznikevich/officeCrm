@@ -162,14 +162,14 @@ const lead = {
     },
 
     post: async (connection, options) => {
-        await connection.Leads.create({
+        const lead = await connection.Leads.create({
             ...options,
         });
 
         return {
             success: true,
             result: {
-                message: 'Lead successfully created'
+                lead
             }
         };
     },
