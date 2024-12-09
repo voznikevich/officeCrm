@@ -68,7 +68,8 @@ module.exports = {
                     'no pot',
                     'callback',
                     'reassign',
-                    'active'
+                    'active',
+                    'depositor'
                 ),
                 defaultValue: 'new',
                 allowNull: true,

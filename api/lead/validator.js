@@ -20,7 +20,8 @@ const schemas = {
                     'no pot',
                     'callback',
                     'reassign',
-                    'active'
+                    'active',
+                    'depositor'
                 ).optional(),
                 dateRange: Joi.array()
                     .items(Joi.string().isoDate())
@@ -46,7 +47,8 @@ const schemas = {
                     'no pot',
                     'callback',
                     'reassign',
-                    'active'
+                    'active',
+                    'depositor'
                 ).default('new')
             })
             .required(),
@@ -69,7 +71,8 @@ const schemas = {
                     'no pot',
                     'callback',
                     'reassign',
-                    'active'
+                    'active',
+                    'depositor'
                 ).default('new')
             })
             .required(),

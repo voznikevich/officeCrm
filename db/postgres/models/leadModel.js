@@ -69,7 +69,8 @@ module.exports = class Leads extends Sequelize.Model {
                         'no pot',
                         'callback',
                         'reassign',
-                        'active'
+                        'active',
+                        'depositor'
                     ), defaultValue: 'new',
                     allowNull: true,
 
