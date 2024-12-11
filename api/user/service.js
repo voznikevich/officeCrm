@@ -18,9 +18,20 @@ const user = {
     },
 
     all: async (connection, user) => {
-        const users = await connection.Users.findAll({
-            attributes: {exclude: ['password', 'refresh_token', 'updatedAt']}
-        });
+        let users;
+        if (user.type === 'head' || user.type === 'shift') {
+            users = await connection.Users.findAll({
+                attributes: {exclude: ['password', 'refresh_token', 'updatedAt']}
+            });
+        }
+
+        if (user.type === 'teamLead') {
+            users = await connection.Users.findAll({
+                where: {group: user.group},
+                attributes: {exclude: ['password', 'refresh_token', 'updatedAt']}
+            });
+        }
+
 
         return {
             success: true,

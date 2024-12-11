@@ -174,13 +174,27 @@ const lead = {
         };
     },
 
-    put: async (connection, options) => {
+    put: async (connection, options, user) => {
         const leadId = options.leadId;
         console.log(leadId)
         delete options.leadId;
-        await connection.Leads.update({...options}, {
-            where: {id: leadId},
-        })
+
+        if (user.type === 'head' || user.type === 'shift') {
+            await connection.Leads.update({...options}, {
+                where: {id: leadId},
+            })
+        }
+        if (user.type === 'teamLead' && options.manager) {
+            const teamLeadManagers = await connection.Users.findAll({
+                where: {group: user.group}
+            })
+            const isManagerExists = teamLeadManagers.some(managerObj => managerObj.id === options.manager);
+            if (isManagerExists) {
+                await connection.Leads.update({...options}, {
+                    where: {id: leadId},
+                })
+            }
+        }
 
         return {
             success: true,

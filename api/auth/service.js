@@ -3,7 +3,6 @@ const bcrypt = require("bcryptjs");
 
 const user = {
 
-
   login: async (connection, options) => {
     const user = await connection.Users.findOne({
       where: { email: options.email }
@@ -21,7 +20,8 @@ const user = {
     const tokens = helper.token.generateTokens({
       sub: user.id,
       email: user.email,
-      type: user.type
+      type: user.type,
+      group: user.group
     });
 
     user.refresh_token = tokens.refreshToken;
@@ -65,7 +65,8 @@ const user = {
     const tokens = helper.token.generateTokens({
       sub: user.id,
       email: user.email,
-      type: user.type
+      type: user.type,
+      group: user.group
     });
 
     user.refresh_token = tokens.refreshToken;

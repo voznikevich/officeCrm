@@ -13,7 +13,6 @@ const schemas = {
                     .default('user'),
             })
             .required(),
-
         putUser: Joi.object()
             .keys({
                 userId: Joi.number().optional(),

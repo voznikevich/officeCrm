@@ -54,6 +54,8 @@ const admin = async (req, res, next) => {
     }
     req.user = {};
     req.user.id = decoded.sub;
+    req.user.type = decoded.type;
+    req.user.group = decoded.group;
     next();
 };
 
