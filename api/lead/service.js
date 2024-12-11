@@ -175,34 +175,51 @@ const lead = {
     },
 
     put: async (connection, options, user) => {
-        const leadId = options.leadId;
-        console.log(leadId)
-        delete options.leadId;
+        let updateOptions = {};
+        let shouldUpdate = false;
 
-        if (user.type === 'head' || user.type === 'shift') {
-            await connection.Leads.update({...options}, {
-                where: {id: leadId},
-            })
+        switch (user.type) {
+            case 'head':
+            case 'shift':
+                updateOptions = {...options};
+                shouldUpdate = true;
+                break;
+            case 'teamLead':
+                if (options.manager) {
+                    const teamLeadManagers = await connection.Users.findAll({
+                        where: {group: user.group},
+                        attributes: ['id'],
+                    });
+                    const managerIds = teamLeadManagers.map(({id}) => id);
+                    if (!managerIds.includes(options.manager)) {
+                        return helper.doom.error.managerNotFound()
+                    }
+                    updateOptions.manager = options.manager;
+                }
+                if (options.status) updateOptions = updateOptions.status = options.status;
+
+                shouldUpdate = true;
+                break;
+            case 'user':
+                if (options.status) {
+                    updateOptions = {status: options.status};
+                    shouldUpdate = true;
+                }
+                break;
         }
-        if (user.type === 'teamLead' && options.manager) {
-            const teamLeadManagers = await connection.Users.findAll({
-                where: {group: user.group}
-            })
-            const isManagerExists = teamLeadManagers.some(managerObj => managerObj.id === options.manager);
-            if (isManagerExists) {
-                await connection.Leads.update({...options}, {
-                    where: {id: leadId},
-                })
-            }
+
+        if (shouldUpdate) {
+            await connection.Leads.update(updateOptions, {where: {id: options.leadId}});
         }
 
         return {
             success: true,
             result: {
-                message: 'Lead was successfully updated'
-            }
+                message: 'Lead was successfully updated',
+            },
         };
     },
+
 
     delete: async (connection, options) => {
         await connection.Leads.destroy({where: {id: options.leadId}})

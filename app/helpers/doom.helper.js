@@ -102,6 +102,15 @@ const error = {
       errorCode: errorCode.accountNotFound
     };
   },
+  managerNotFound: () => {
+    return {
+      statusCode: StatusCodes.NOT_FOUND,
+      success: false,
+      message: 'Manager was not found.',
+      error: 'Manager not found',
+      errorCode: errorCode.accountNotFound
+    };
+  },
 
   Unauthorized: () => {
     return {
