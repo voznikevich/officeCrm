@@ -90,7 +90,7 @@ const lead = {
         if (user.type === 'teamLead') {
             const users = await connection.Users.findAll({
                 where: {
-                    group: 1,
+                    group: user.group,
                     type: {[Op.or]: ["user", "teamLead"]}
                 }
             });
