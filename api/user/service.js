@@ -32,7 +32,7 @@ const user = {
             });
         }
 
-
+        console.log(users)
         return {
             success: true,
             result: {
