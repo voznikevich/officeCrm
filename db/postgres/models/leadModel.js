@@ -70,7 +70,10 @@ module.exports = class Leads extends Sequelize.Model {
                         'callback',
                         'reassign',
                         'active',
-                        'depositor'
+                        'depositor',
+                        'initial call',
+                        'wrong info',
+                        'invalid language'
                     ), defaultValue: 'new',
                     allowNull: true,
 

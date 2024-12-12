@@ -21,7 +21,10 @@ const schemas = {
                     'callback',
                     'reassign',
                     'active',
-                    'depositor'
+                    'depositor',
+                    'initial call',
+                    'wrong info',
+                    'invalid language'
                 ).optional(),
                 dateRange: Joi.array()
                     .items(Joi.string().isoDate())
@@ -48,7 +51,10 @@ const schemas = {
                     'callback',
                     'reassign',
                     'active',
-                    'depositor'
+                    'depositor',
+                    'initial call',
+                    'wrong info',
+                    'invalid language'
                 ).default('new')
             })
             .required(),
@@ -72,7 +78,10 @@ const schemas = {
                     'callback',
                     'reassign',
                     'active',
-                    'depositor'
+                    'depositor',
+                    'initial call',
+                    'wrong info',
+                    'invalid language'
                 ).default('new')
             })
             .required(),
