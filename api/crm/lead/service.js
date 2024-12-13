@@ -6,7 +6,10 @@ const lead = {
     get: async (connection, options, user) => {
         const lead = await connection.Leads.findOne({
             where: {id: options.leadId},
-            attributes: {exclude: ['affiliate', 'manager']},
+            attributes: {
+                exclude: ['affiliate', 'manager'],
+                include: ["createdAt"]
+            },
             include: [
                 {
                     required: false,
@@ -68,7 +71,10 @@ const lead = {
 
         const limit = options.limit || 10;
         const offset = options.page ? (options.page - 1) * limit : 0;
-        const defaultAttributes = {exclude: ['affiliate', 'manager', 'comment']};
+        const defaultAttributes = {
+            exclude: ['affiliate', 'manager', 'comment'],
+            include: ["createdAt"]
+        };
         const defaultInclude = [
             {
                 required: false,
