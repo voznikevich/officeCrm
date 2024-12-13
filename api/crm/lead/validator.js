@@ -55,7 +55,7 @@ const schemas = {
                     'initial call',
                     'wrong info',
                     'invalid language'
-                )
+                ).default('new')
             })
             .required(),
 
@@ -67,7 +67,7 @@ const schemas = {
                 language: Joi.string().optional(),
                 affiliate: Joi.number().integer().optional(),
                 manager: Joi.number().integer().optional(),
-                comment: Joi.number().integer().allow(null),
+                comment: Joi.number().integer().allow(null).optional(),
                 status: Joi.string().valid(
                     'new',
                     'no answer',
@@ -82,7 +82,7 @@ const schemas = {
                     'initial call',
                     'wrong info',
                     'invalid language'
-                )
+                ).optional()
             })
             .required(),
 
