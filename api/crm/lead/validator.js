@@ -24,7 +24,8 @@ const schemas = {
                     'depositor',
                     'initial call',
                     'wrong info',
-                    'invalid language'
+                    'invalid language',
+                    'wrong number'
                 ).optional(),
                 dateRange: Joi.array()
                     .items(Joi.string().isoDate())
@@ -54,7 +55,8 @@ const schemas = {
                     'depositor',
                     'initial call',
                     'wrong info',
-                    'invalid language'
+                    'invalid language',
+                    'wrong number'
                 ).default('new')
             })
             .required(),
@@ -81,7 +83,8 @@ const schemas = {
                     'depositor',
                     'initial call',
                     'wrong info',
-                    'invalid language'
+                    'invalid language',
+                    'wrong number'
                 ).optional()
             })
             .required(),
