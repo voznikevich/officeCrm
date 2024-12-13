@@ -1,8 +1,8 @@
 const service = require('./service');
-const {controller} = require('../../app/helpers/helper');
+const {controller} = require('../../../app/helpers/helper');
 const {StatusCodes} = require('http-status-codes');
 
-const lead = {
+const affiliate = {
     get: async (req, res) => {
         await controller.sendJson(
             res,
@@ -17,7 +17,7 @@ const lead = {
         await controller.sendJson(
             res,
             async (connection) => {
-                return await service.all(connection, req.options, req.user);
+                return await service.all(connection, req.options);
             },
             StatusCodes.OK
         );
@@ -37,7 +37,7 @@ const lead = {
         await controller.sendJson(
             res,
             async (connection) => {
-                return await service.put(connection, req.options, req.user);
+                return await service.put(connection, req.options);
             },
             StatusCodes.OK
         );
@@ -56,4 +56,4 @@ const lead = {
 
 };
 
-module.exports = lead;
+module.exports = affiliate;

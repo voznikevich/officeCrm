@@ -13,8 +13,10 @@ const errorCode = {
   passwordNotValid: 130,
   adminRights: 135,
   accountNotFound: 140,
+  leadNotFound: 141,
   accountNotConfirmed: 150,
-  accountWasBlocked: 151
+  accountWasBlocked: 151,
+  accessDenied: 403
 };
 
 const error = {
@@ -111,6 +113,15 @@ const error = {
       errorCode: errorCode.accountNotFound
     };
   },
+  leadNotFound: () => {
+    return {
+      statusCode: StatusCodes.NOT_FOUND,
+      success: false,
+      message: 'Lead was not found.',
+      error: 'Lead not found',
+      errorCode: errorCode.leadNotFound
+    };
+  },
 
   Unauthorized: () => {
     return {
@@ -169,6 +180,16 @@ const error = {
       message: 'Admin blocked your account',
       error: 'Conflict',
       errorCode: errorCode.accountWasBlocked
+    };
+  },
+
+  accessDenied: () => {
+    return {
+      statusCode: StatusCodes.FORBIDDEN,
+      success: false,
+      message: 'Access denied: you do not manage this lead',
+      error: 'FORBIDDEN',
+      errorCode: errorCode.accessDenied
     };
   }
 };

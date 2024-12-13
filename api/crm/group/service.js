@@ -1,6 +1,3 @@
-const helper = require('../../app/helpers/helper');
-const {where} = require("sequelize");
-
 const group = {
     get: async (connection, options) => {
         const group = await connection.Groups.findOne({

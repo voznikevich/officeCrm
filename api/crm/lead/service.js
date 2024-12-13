@@ -1,13 +1,19 @@
-const helper = require('../../app/helpers/helper');
+const helper = require('../../../app/helpers/helper');
 const {Op} = require("sequelize");
-const {Sequelize} = require("../../db/postgres/models");
+const {Sequelize} = require("../../../db/postgres/models");
 
 const lead = {
-    get: async (connection, options) => {
+    get: async (connection, options, user) => {
         const lead = await connection.Leads.findOne({
             where: {id: options.leadId},
             attributes: {exclude: ['affiliate', 'manager']},
             include: [
+                {
+                    required: false,
+                    model: connection.Comments,
+                    as: "lastComment",
+                    attributes: ['id', 'message', 'createdAt']
+                },
                 {
                     required: false,
                     model: connection.Affiliates,
@@ -18,10 +24,26 @@ const lead = {
                     model: connection.Users,
                     as: "user",
                     attributes: {exclude: ['password', 'refresh_token']},
-
                 }
             ]
         });
+
+        if (!lead) return helper.doom.error.leadNotFound();
+
+        if (user.type === 'teamLead') {
+            const users = await connection.Users.findAll({
+                where: {
+                    group: user.group,
+                    type: {[Op.or]: ["user", "teamLead"]}
+                }
+            });
+            const userIds = users.map(u => u.id);
+            const isManagerInGroup = userIds.includes(lead.manager);
+
+            if (!isManagerInGroup) return helper.doom.error.accessDenied()
+        }
+
+        if (user.type === 'user' && lead.manager !== user.id) return helper.doom.error.accessDenied()
 
         return {
             success: true,
@@ -221,8 +243,20 @@ const lead = {
     },
 
 
-    delete: async (connection, options) => {
-        await connection.Leads.destroy({where: {id: options.leadId}})
+    delete: async (connection, options, user) => {
+        const lead = await connection.Leads.findOne({
+            where: {
+                id: options.leadId
+            }
+        })
+        if (!lead) return helper.doom.error.leadNotFound();
+
+
+        if ((user.type === 'user' || user.type === 'teamLead') && lead.manager !== user.id) {
+            return helper.doom.error.accessDenied();
+        }
+
+        await lead.destroy();
 
         return {
             success: true,

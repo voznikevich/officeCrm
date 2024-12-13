@@ -1,5 +1,5 @@
 const service = require('./service');
-const {controller} = require('../../app/helpers/helper');
+const {controller} = require('../../../app/helpers/helper');
 const {StatusCodes} = require('http-status-codes');
 
 const auth = {

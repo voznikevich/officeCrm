@@ -1,4 +1,4 @@
-const helper = require('../../app/helpers/helper');
+const helper = require('../../../app/helpers/helper');
 const bcrypt = require("bcryptjs");
 
 const user = {

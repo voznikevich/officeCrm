@@ -1,9 +1,9 @@
-const auth = require('../../api/auth/router');
-const user = require('../../api/user/router');
-const lead = require('../../api/lead/router');
-const affiliate = require('../../api/affiliate/router');
-const group = require('../../api/group/router');
-const comment = require('../../api/comment/router');
+const auth = require('../../api/crm/auth/router');
+const user = require('../../api/crm/user/router');
+const lead = require('../../api/crm/lead/router');
+const affiliate = require('../../api/crm/affiliate/router');
+const group = require('../../api/crm/group/router');
+const comment = require('../../api/crm/comment/router');
 
 module.exports = {
     api: (app) => {

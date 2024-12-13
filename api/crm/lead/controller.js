@@ -1,13 +1,23 @@
 const service = require('./service');
-const {controller} = require('../../app/helpers/helper');
+const {controller} = require('../../../app/helpers/helper');
 const {StatusCodes} = require('http-status-codes');
 
-const comment = {
+const lead = {
+    get: async (req, res) => {
+        await controller.sendJson(
+            res,
+            async (connection) => {
+                return await service.get(connection, req.options,req.user);
+            },
+            StatusCodes.OK
+        );
+    },
+
     all: async (req, res) => {
         await controller.sendJson(
             res,
             async (connection) => {
-                return await service.all(connection, req.options);
+                return await service.all(connection, req.options, req.user);
             },
             StatusCodes.OK
         );
@@ -17,7 +27,7 @@ const comment = {
         await controller.sendJson(
             res,
             async (connection) => {
-                return await service.post(connection, req.options, req.user);
+                return await service.post(connection, req.options);
             },
             StatusCodes.OK
         );
@@ -27,7 +37,7 @@ const comment = {
         await controller.sendJson(
             res,
             async (connection) => {
-                return await service.put(connection, req.options);
+                return await service.put(connection, req.options, req.user);
             },
             StatusCodes.OK
         );
@@ -37,7 +47,7 @@ const comment = {
         await controller.sendJson(
             res,
             async (connection) => {
-                return await service.delete(connection, req.options);
+                return await service.delete(connection, req.options, req.user);
             },
             StatusCodes.OK
         );
@@ -46,4 +56,4 @@ const comment = {
 
 };
 
-module.exports = comment;
+module.exports = lead;

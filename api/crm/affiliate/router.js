@@ -1,4 +1,4 @@
-const {validator, middlewares} = require('../../app/helpers/helper');
+const {validator, middlewares} = require('../../../app/helpers/helper');
 const {schemas} = require('./validator');
 const express = require('express');
 const router = express.Router({});
@@ -22,7 +22,6 @@ router.post('/',
 
 router.put('/',
     // asyncHandler(middlewares.auth.admin),
-    validator.main(schemas.router.post),
     asyncHandler(controller.put)
 );
 

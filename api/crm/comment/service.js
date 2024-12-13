@@ -1,5 +1,3 @@
-const helper = require('../../app/helpers/helper');
-
 const comment = {
     all: async (connection, options) => {
         const comments = await connection.Comments.findAll({

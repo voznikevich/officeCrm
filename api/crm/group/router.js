@@ -1,4 +1,4 @@
-const {validator, middlewares} = require('../../app/helpers/helper');
+const {validator, middlewares} = require('../../../app/helpers/helper');
 const {schemas} = require('./validator');
 const express = require('express');
 const router = express.Router({});
@@ -11,25 +11,22 @@ router.get('/',
     asyncHandler(controller.get));
 
 router.get('/all',
-    asyncHandler(middlewares.auth.user),
+    // asyncHandler(middlewares.auth.user),
     validator.main(schemas.router.all),
     asyncHandler(controller.all));
 
 router.post('/',
     validator.main(schemas.router.post),
-    // asyncHandler(middlewares.auth.user),
     asyncHandler(controller.post)
 );
 
 router.put('/',
     // asyncHandler(middlewares.auth.admin),
-    asyncHandler(middlewares.auth.user),
-    validator.main(schemas.router.put),
+    validator.main(schemas.router.post),
     asyncHandler(controller.put)
 );
 
 router.delete('/',
-    // asyncHandler(middlewares.auth.admin),
     validator.main(schemas.router.delete),
     asyncHandler(controller.delete)
 );

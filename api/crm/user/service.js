@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 
-const helper = require('../../app/helpers/helper');
+const helper = require('../../../app/helpers/helper');
 
 const user = {
     get: async (connection, user) => {
