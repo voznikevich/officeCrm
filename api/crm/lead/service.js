@@ -7,7 +7,7 @@ const lead = {
         const lead = await connection.Leads.findOne({
             where: {id: options.leadId},
             attributes: {
-                exclude: ['affiliate', 'manager'],
+                // exclude: ['affiliate', 'manager'],
                 include: ["createdAt"]
             },
             include: [
