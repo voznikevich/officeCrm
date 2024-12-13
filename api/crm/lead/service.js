@@ -223,8 +223,9 @@ const lead = {
                         return helper.doom.error.managerNotFound()
                     }
                     updateOptions.manager = options.manager;
+
                 }
-                if (options.status) updateOptions = updateOptions.status = options.status;
+                if (options.status) updateOptions.status = options.status;
 
                 shouldUpdate = true;
                 break;
@@ -239,7 +240,7 @@ const lead = {
         if (shouldUpdate) {
             await connection.Leads.update(updateOptions, {where: {id: options.leadId}});
         }
-
+        console.log(updateOptions, '@@@@')
         return {
             success: true,
             result: {

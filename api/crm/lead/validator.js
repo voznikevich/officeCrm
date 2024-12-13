@@ -55,7 +55,7 @@ const schemas = {
                     'initial call',
                     'wrong info',
                     'invalid language'
-                ).default('new')
+                )
             })
             .required(),
 
@@ -82,7 +82,7 @@ const schemas = {
                     'initial call',
                     'wrong info',
                     'invalid language'
-                ).default('new')
+                )
             })
             .required(),
 
