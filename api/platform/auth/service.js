@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const user = {
 
   login: async (connection, options) => {
-    const user = await connection.Users.findOne({
+    const user = await connection.PlatformUsers.findOne({
       where: { email: options.email }
     });
 
@@ -20,11 +20,10 @@ const user = {
     const tokens = helper.token.generateTokens({
       sub: user.id,
       email: user.email,
-      type: user.type,
-      group: user.group
+      type: process.env.PLATFORM_USER_TYPE,
+      group: process.env.PLATFORM_USER_TYPE
     });
 
-    user.refresh_token = tokens.refreshToken;
     await user.save();
 
     return {
@@ -34,7 +33,7 @@ const user = {
   },
 
   logout: async (connection, refreshToken) => {
-    await connection.Users.update(
+    await connection.PlatformUsers.update(
       { refresh_token: null },
       {
         where: { refresh_token: refreshToken },
@@ -56,7 +55,7 @@ const user = {
     }
 
     const userData = helper.token.validateRefreshToken(refreshToken);
-    const user = await connection.Users.findOne({ where: { refresh_token: refreshToken } });
+    const user = await connection.PlatformUsers.findOne({ where: { refresh_token: refreshToken } });
 
     if (!userData || !user) {
       return helper.doom.error.Unauthorized();

@@ -5,6 +5,9 @@ const affiliate = require('../../api/crm/affiliate/router');
 const group = require('../../api/crm/group/router');
 const comment = require('../../api/crm/comment/router');
 
+const platformUser = require('../../api/platform/user/router');
+const platformAuth = require('../../api/platform/auth/router');
+
 module.exports = {
     api: (app) => {
         app.use('/user', user);
@@ -13,5 +16,8 @@ module.exports = {
         app.use('/affiliate', affiliate);
         app.use('/group', group);
         app.use('/comment', comment);
+        // ****************** PLATFORM **********************
+        app.use('/platform/user', platformUser);
+        app.use('/platform/auth', platformAuth);
     }
 };
