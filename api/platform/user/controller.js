@@ -17,7 +17,7 @@ const user = {
         await controller.sendJson(
             res,
             async (connection) => {
-                return await service.registration(connection, req.options);
+                return await service.registration(connection, req.options, req.user);
             },
             StatusCodes.OK
         );

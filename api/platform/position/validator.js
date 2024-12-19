@@ -3,9 +3,9 @@ const bcrypt = require("bcryptjs");
 
 const schemas = {
     router: {
-        all: Joi.object()
+        get: Joi.object()
             .keys({
-                leadId: Joi.number().required(),
+                positionId: Joi.number().required(),
             })
             .required(),
         post: Joi.object()
@@ -20,16 +20,18 @@ const schemas = {
             .required(),
         put: Joi.object()
             .keys({
-                firstName: Joi.string().optional(),
-                lastName: Joi.string().optional(),
-                country: Joi.string().optional(),
-                email: Joi.string().email().optional(),
-                phone: Joi.string().allow(null),
+                positionId: Joi.number().required(),
+                takeProfit: Joi.string().optional(),
+                stopLoss: Joi.string().optional(),
+                enterPrice: Joi.number().optional(),
+                currentPrice: Joi.number().optional(),
+                profit: Joi.string().optional(),
+                isActive: Joi.boolean().optional()
             })
             .required(),
         delete: Joi.object()
             .keys({
-                userId: Joi.number().required()
+                positionId: Joi.number().required()
             })
             .required()
     }

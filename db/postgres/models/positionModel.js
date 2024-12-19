@@ -53,8 +53,12 @@ module.exports = class Positions extends Sequelize.Model {
                     allowNull: false,
                 },
                 profit: {
-                    type: DataTypes.STRING,
+                    type: DataTypes.FLOAT,
                     allowNull: true,
+                },
+                isActive: {
+                    type: DataTypes.BOOLEAN,
+                    defaultValue: true
                 },
                 createdAt: {
                     type: DataTypes.DATE,

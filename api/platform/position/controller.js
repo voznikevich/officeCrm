@@ -2,12 +2,12 @@ const service = require('./service');
 const {controller} = require('../../../app/helpers/helper');
 const {StatusCodes} = require('http-status-codes');
 
-const user = {
+const position = {
     get: async (req, res) => {
         await controller.sendJson(
             res,
             async (connection) => {
-                return await service.get(connection, req.user);
+                return await service.get(connection, req.options, req.user);
             },
             StatusCodes.OK
         );
@@ -37,7 +37,7 @@ const user = {
         await controller.sendJson(
             res,
             async (connection) => {
-                return await service.putUser(connection, req.options, req.user);
+                return await service.put(connection, req.options, req.user);
             },
             StatusCodes.OK
         );
@@ -47,7 +47,7 @@ const user = {
         await controller.sendJson(
             res,
             async (connection) => {
-                return await service.deleteUser(connection, req.options);
+                return await service.delete(connection, req.options, req.user);
             },
             StatusCodes.OK
         );
@@ -56,4 +56,4 @@ const user = {
 
 };
 
-module.exports = user;
+module.exports = position;

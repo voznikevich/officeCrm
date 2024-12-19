@@ -8,7 +8,7 @@ const controller = require('./controller');
 router.post(
     '/create',
     validator.main(schemas.router.registration),
-    // asyncHandler(middlewares.auth.admin),
+    asyncHandler(middlewares.auth.user),
     asyncHandler(controller.registration)
 );
 

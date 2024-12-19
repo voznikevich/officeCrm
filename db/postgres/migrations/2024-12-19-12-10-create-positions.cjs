@@ -51,8 +51,12 @@ module.exports = {
                 allowNull: false,
             },
             profit: {
-                type: Sequelize.STRING,
+                type: Sequelize.FLOAT,
                 allowNull: true,
+            },
+            isActive: {
+                type: Sequelize.BOOLEAN,
+                defaultValue: true
             },
             createdAt: {
                 type: Sequelize.DATE,

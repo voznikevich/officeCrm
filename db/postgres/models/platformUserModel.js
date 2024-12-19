@@ -32,6 +32,10 @@ module.exports = class PlatformUsers extends Sequelize.Model {
                     type: DataTypes.STRING,
                     allowNull: false
                 },
+                balance: {
+                    type: DataTypes.INTEGER,
+                    defaultValue: 0
+                },
                 lead: {
                     type: DataTypes.INTEGER,
                     allowNull: true,
@@ -41,6 +45,14 @@ module.exports = class PlatformUsers extends Sequelize.Model {
                     },
                     onUpdate: 'CASCADE',
                     onDelete: 'CASCADE',
+                },
+                owner: {
+                    type: DataTypes.INTEGER,
+                    allowNull: false,
+                    references: {
+                        model: 'Users',
+                        key: 'id',
+                    },
                 },
             },
             {
@@ -55,6 +67,10 @@ module.exports = class PlatformUsers extends Sequelize.Model {
         this.belongsTo(models.Leads, {
             foreignKey: 'lead',
             as: "leadData"
+        });
+        this.belongsTo(models.Users, {
+            foreignKey: 'owner',
+            as: "crmUser"
         });
     }
 };

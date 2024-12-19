@@ -16,7 +16,7 @@ const user = {
         };
     },
 
-    registration: async (connection, options) => {
+    registration: async (connection, options, user) => {
         const lead = await connection.Leads.findOne({
             where: {id: options.leadId}
         })
@@ -25,18 +25,23 @@ const user = {
             return helper.doom.error.leadNotFound();
         }
 
-        const userPassword = helper.math.generatePassword();
+        if (user.type === 'head' || user.type === 'shift' || user.type === 'teamLead') {
+            const userPassword = helper.math.generatePassword();
 
-        const platformUser = await connection.PlatformUsers.create({
-            id: helper.math.generateNumericUUID(),
-            firstName: lead.userName.split(' ')[0] ?? '',
-            lastName: lead.userName.split(' ')[1] ?? '',
-            email: lead.email,
-            country: lead.country,
-            phone: lead.phone,
-            password: await bcrypt.hash(userPassword, 10),
-            lead: options.leadId
-        });
+            const platformUser = await connection.PlatformUsers.create({
+                id: helper.math.generateNumericUUID(),
+                firstName: lead.userName.split(' ')[0] ?? '',
+                lastName: lead.userName.split(' ')[1] ?? '',
+                email: lead.email,
+                country: lead.country,
+                phone: lead.phone,
+                password: await bcrypt.hash(userPassword, 10),
+                lead: options.leadId,
+                owner: user.id
+            });
+        } else {
+            return helper.doom.error.accessDenied()
+        }
 
         return {
             success: true,
@@ -46,7 +51,8 @@ const user = {
                 message: 'User successfully created',
             }
         };
-    },
+    }
+    ,
 
     putUser: async (connection, options) => {
         const user = await connection.PlatformUsers.findOne({
@@ -68,24 +74,27 @@ const user = {
 
     },
 
-    deleteUser: async (connection, options) => {
-        const existingUser = await connection.PlatformUsers.findOne({where: {id: options.userId}});
+    deleteUser:
+        async (connection, options) => {
+            const result = await connection.PlatformUsers.destroy({
+                where: {
+                    id: options.userId
+                }
+            });
 
-        if (!existingUser) {
+            if (result === 0) {
+                return {
+                    success: false,
+                    result: {message: 'User does not exist'}
+                };
+            }
+
             return {
-                success: false,
-                result: {message: 'User does not exist'}
+                success: true,
+                result: {message: 'User was successfully deleted'}
             };
+
         }
-
-        await connection.PlatformUsers.destroy({where: {id: options.userId}})
-
-        return {
-            success: true,
-            result: {message: 'User was successfully deleted'}
-        };
-
-    }
 };
 
 module.exports = user;

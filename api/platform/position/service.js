@@ -1,32 +1,44 @@
-const bcrypt = require('bcryptjs');
 const helper = require('../../../app/helpers/helper');
-const Joi = require("joi");
+const {Sequelize} = require("sequelize");
 
-const user = {
-    get: async (connection, user) => {
-        const userData = await connection.PlatformUsers.findOne({
-            where: {id: user.id},
-            attributes: {exclude: ['password', 'createdAt', 'updatedAt']}
+const position = {
+    get: async (connection, options, user) => {
+        const position = await connection.Positions.findOne({
+            where: {
+                id: options.positionId,
+                userId: user.id
+            },
+            include: [{
+                required: false,
+                model: connection.Pairs,
+                as: "pair",
+            }],
+            attributes: {exclude: ['createdAt', 'updatedAt', 'pairId']}
         });
 
         return {
             success: true,
             result: {
-                user: userData
+                position
             }
         };
     },
 
     all: async (connection, user) => {
-        const userData = await connection.PlatformUsers.findOne({
-            where: {id: user.id},
-            attributes: {exclude: ['password', 'createdAt', 'updatedAt']}
+        const positions = await connection.Positions.findAll({
+            where: {userId: user.id},
+            include: [{
+                required: false,
+                model: connection.Pairs,
+                as: "pair",
+            }],
+            attributes: {exclude: ['createdAt', 'updatedAt', 'pairId']}
         });
 
         return {
             success: true,
             result: {
-                user: userData
+                positions
             }
         };
     },
@@ -50,44 +62,50 @@ const user = {
         };
     },
 
-    put: async (connection, options) => {
-        const user = await connection.PlatformUsers.findOne({
-            where: {id: options.userId}
-        });
+    put: async (connection, options, user) => {
+        const position = await connection.Positions.findOne({where: {id: options.positionId}});
 
-        if (!user) {
-            return helper.doom.error.accountNotFound();
+        if (!position) {
+            return helper.doom.error.positionNotFound();
         }
 
-        await user.update(options);
+        await position.update(options);
+
+        if (options.isActive === false) {
+            await connection.PlatformUsers.update(
+                {balance: Sequelize.literal(`balance + ${position.profit}`)},
+                {where: {id: user.id}}
+            );
+        }
 
         return {
             success: true,
             result: {
-                message: 'User was successfully updated'
+                message: 'Position was successfully updated'
             }
         };
-
     },
 
-    delete: async (connection, options) => {
-        const existingPosition = await connection.Positions.findOne({where: {id: options.userId}});
+    delete: async (connection, options, user) => {
+        const result = await connection.Positions.destroy({
+            where: {
+                id: options.positionId,
+                userId: user.id
+            }
+        });
 
-        if (!existingPosition) {
+        if (result === 0) {
             return {
                 success: false,
-                result: {message: 'User does not exist'}
+                result: {message: 'Position does not exist'}
             };
         }
 
-        await connection.Positions.destroy({where: {id: options.userId}})
-
         return {
             success: true,
-            result: {message: 'User was successfully deleted'}
+            result: {message: 'Position successfully deleted'}
         };
-
     }
 };
 
-module.exports = user;
+module.exports = position;

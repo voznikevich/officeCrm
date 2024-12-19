@@ -14,6 +14,7 @@ const errorCode = {
   adminRights: 135,
   accountNotFound: 140,
   leadNotFound: 141,
+  positionNotFound: 142,
   accountNotConfirmed: 150,
   accountWasBlocked: 151,
   accessDenied: 403
@@ -120,6 +121,15 @@ const error = {
       message: 'Lead was not found.',
       error: 'Lead not found',
       errorCode: errorCode.leadNotFound
+    };
+  },
+  positionNotFound: () => {
+    return {
+      statusCode: StatusCodes.NOT_FOUND,
+      success: false,
+      message: 'Position was not found.',
+      error: 'Position not found',
+      errorCode: errorCode.positionNotFound
     };
   },
 
