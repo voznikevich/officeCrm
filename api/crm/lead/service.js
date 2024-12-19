@@ -154,7 +154,13 @@ const lead = {
                     }
                 });
 
-                where.manager = {[Op.in]: users.map(u => u.id)};
+                const teamLeadUsers = users.map(u => u.id);
+
+                if (!where.manager) {
+                    where.manager = {[Op.in]: teamLeadUsers};
+                } else if (!teamLeadUsers.includes(where.manager)) {
+                    return helper.doom.error.managerNotFound();
+                }
 
                 const {count, rows: leads} = await connection.Leads.findAndCountAll({
                     where,
