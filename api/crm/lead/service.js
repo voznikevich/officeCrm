@@ -61,6 +61,9 @@ const lead = {
             const where = {};
 
             if (options.status) where.status = options.status;
+            if (options.country) where.country = options.country;
+            if (options.language) where.language = options.language;
+            if (options.managerId) where.manager = options.managerId;
 
             if (dateRange.length === 2) {
                 where.createdAt = {

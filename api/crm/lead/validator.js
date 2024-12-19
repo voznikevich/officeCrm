@@ -27,6 +27,9 @@ const schemas = {
                     'invalid language',
                     'wrong number'
                 ).optional(),
+                country: Joi.string().optional(),
+                language: Joi.string().optional(),
+                managerId: Joi.number().integer().optional(),
                 dateRange: Joi.array()
                     .items(Joi.string().isoDate())
                     .length(2)
