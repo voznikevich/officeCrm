@@ -10,6 +10,11 @@ router.get('/',
     validator.main(schemas.router.get),
     asyncHandler(controller.get));
 
+router.get('/country-and-language',
+    asyncHandler(middlewares.auth.user),
+    validator.main(schemas.router.getCountryAndLanguage),
+    asyncHandler(controller.getCountryAndLanguage));
+
 router.get('/all',
     asyncHandler(middlewares.auth.user),
     validator.main(schemas.router.all),

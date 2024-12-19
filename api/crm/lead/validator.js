@@ -6,6 +6,11 @@ const schemas = {
             .keys({
                 leadId: Joi.number().required()
             }),
+        getCountryAndLanguage: Joi.object()
+            .keys({
+                country: Joi.boolean().default(true).optional(),
+                language: Joi.string().default(true).optional(),
+            }),
         all: Joi.object()
             .keys({
                 affiliateId: Joi.number().optional(),

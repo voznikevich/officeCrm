@@ -13,6 +13,16 @@ const lead = {
         );
     },
 
+    getCountryAndLanguage: async (req, res) => {
+        await controller.sendJson(
+            res,
+            async (connection) => {
+                return await service.getCountryAndLanguage(connection, req.options,req.user);
+            },
+            StatusCodes.OK
+        );
+    },
+
     all: async (req, res) => {
         await controller.sendJson(
             res,

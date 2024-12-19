@@ -56,6 +56,34 @@ const lead = {
             };
         },
 
+        getCountryAndLanguage: async (connection, options) => {
+            let countries = [];
+            let languages = [];
+
+            if (options.country) {
+                const countryRecords = await connection.Leads.findAll({
+                    attributes: [[Sequelize.fn('DISTINCT', Sequelize.col('country')), 'country']]
+                });
+                countries = countryRecords.map(record => record.country);
+            }
+
+            if (options.language) {
+                const languageRecords = await connection.Leads.findAll({
+                    attributes: [[Sequelize.fn('DISTINCT', Sequelize.col('language')), 'language']]
+                });
+                languages = languageRecords.map(record => record.language);
+            }
+
+            return {
+                success: true,
+                result: {
+                    countries: countries || [],
+                    languages: languages || []
+                }
+            };
+        },
+
+
         all: async (connection, options, user) => {
             const dateRange = options.dateRange || [];
             const where = {};
@@ -64,7 +92,6 @@ const lead = {
             if (options.country) where.country = options.country;
             if (options.language) where.language = options.language;
             if (options.managerId) where.manager = options.managerId;
-            let x = []
 
             if (dateRange.length === 2) {
                 where.createdAt = {
