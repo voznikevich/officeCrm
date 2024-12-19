@@ -1,4 +1,4 @@
-export const languageMap = {
+module.exports = languageMap = {
     'EN': 'English',
     'DE': 'German',
     'JA': 'Japanese',

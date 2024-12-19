@@ -1,4 +1,4 @@
-export const countryMap = {
+module.exports = countryMap = {
     'AF': 'Afghanistan',
     'AL': 'Albania',
     'DZ': 'Algeria',
