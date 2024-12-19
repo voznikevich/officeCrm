@@ -39,20 +39,18 @@ const user = {
                 lead: options.leadId,
                 owner: user.id
             });
+            return {
+                success: true,
+                result: {
+                    platformUser,
+                    userPassword,
+                    message: 'User successfully created',
+                }
+            };
         } else {
             return helper.doom.error.accessDenied()
         }
-
-        return {
-            success: true,
-            result: {
-                platformUser,
-                userPassword,
-                message: 'User successfully created',
-            }
-        };
-    }
-    ,
+    },
 
     putUser: async (connection, options) => {
         const user = await connection.PlatformUsers.findOne({
