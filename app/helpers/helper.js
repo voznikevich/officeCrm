@@ -6,6 +6,8 @@ module.exports = {
   validator: require('./validator.helper'),
   controller: require('./controller.helper'),
   math: require('./math.helper'),
+  country: require('./countries'),
+  language: require('./languages'),
 
   middlewares: {
     auth: require('../middlewares/auth.handler'),

@@ -221,6 +221,14 @@ const lead = {
         },
 
         post: async (connection, options) => {
+            if (options.country && helper.country.countryMap[options.country]) {
+                options.country = helper.country.countryMap[options.country];
+            }
+
+            if (options.language && helper.language.languageMap[options.language]) {
+                options.language = helper.language.languageMap[options.language];
+            }
+
             const lead = await connection.Leads.create({
                 ...options,
             });
