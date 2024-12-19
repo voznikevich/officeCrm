@@ -7,6 +7,7 @@ const comment = require('../../api/crm/comment/router');
 
 const platformUser = require('../../api/platform/user/router');
 const platformAuth = require('../../api/platform/auth/router');
+const platformPosition = require('../../api/platform/position/router');
 
 module.exports = {
     api: (app) => {
@@ -19,5 +20,6 @@ module.exports = {
         // ****************** PLATFORM **********************
         app.use('/platform/user', platformUser);
         app.use('/platform/auth', platformAuth);
+        app.use('/platform/position', platformPosition);
     }
 };

@@ -227,12 +227,11 @@ const lead = {
         },
 
         post: async (connection, options) => {
-            if (options.country && helper.country.countryMap[options.country.toUpperCase()]) {
-                options.country = helper.country.countryMap[options.country.toUpperCase()];
+            if (options.country && helper.country[options.country.toUpperCase()]) {
+                options.country = helper.country[options.country.toUpperCase()];
             }
-
-            if (options.language && helper.language.languageMap[options.language.toUpperCase()]) {
-                options.language = helper.language.languageMap[options.language.toUpperCase()];
+            if (options.language && helper.language[options.language.toUpperCase()]) {
+                options.language = helper.language[options.language.toUpperCase()];
             }
 
             const lead = await connection.Leads.create({

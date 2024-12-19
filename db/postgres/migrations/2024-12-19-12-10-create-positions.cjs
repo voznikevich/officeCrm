@@ -27,11 +27,11 @@ module.exports = {
                 onDelete: 'CASCADE',
             },
             enterPrice: {
-                type: Sequelize.STRING,
+                type: Sequelize.FLOAT,
                 allowNull: false,
             },
             amount: {
-                type: Sequelize.INTEGER,
+                type: Sequelize.FLOAT,
                 allowNull: false,
             },
             takeProfit: {

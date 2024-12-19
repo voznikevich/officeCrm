@@ -29,11 +29,11 @@ module.exports = class Positions extends Sequelize.Model {
                     onDelete: 'CASCADE',
                 },
                 enterPrice: {
-                    type: DataTypes.STRING,
+                    type: DataTypes.FLOAT,
                     allowNull: false,
                 },
                 amount: {
-                    type: DataTypes.INTEGER,
+                    type: DataTypes.FLOAT,
                     allowNull: false,
                 },
                 takeProfit: {
