@@ -63,7 +63,9 @@ const schemas = {
 
         put: Joi.object()
             .keys({
-                leadId: Joi.number().required(),
+                leadIds: Joi.array()
+                    .items(Joi.number())
+                    .required(),
                 userName: Joi.string().optional(),
                 country: Joi.string().optional(),
                 language: Joi.string().optional(),
