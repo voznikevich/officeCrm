@@ -13,17 +13,27 @@ const user = {
         );
     },
 
-    registration: async (req, res) => {
+    all: async (req, res) => {
         await controller.sendJson(
             res,
             async (connection) => {
-                return await service.registration(connection, req.options);
+                return await service.all(connection, req.user);
             },
             StatusCodes.OK
         );
     },
 
-    putUser: async (req, res) => {
+    post: async (req, res) => {
+        await controller.sendJson(
+            res,
+            async (connection) => {
+                return await service.post(connection, req.options, req.user);
+            },
+            StatusCodes.OK
+        );
+    },
+
+    put: async (req, res) => {
         await controller.sendJson(
             res,
             async (connection) => {
@@ -33,7 +43,7 @@ const user = {
         );
     },
 
-    deleteUser: async (req, res) => {
+    delete: async (req, res) => {
         await controller.sendJson(
             res,
             async (connection) => {

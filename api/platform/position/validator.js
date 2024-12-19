@@ -8,21 +8,16 @@ const schemas = {
                 leadId: Joi.number().required(),
             })
             .required(),
-        // post: Joi.object()
-            // .keys({
-            //     pairId: Joi.number().integer().required(),
-            //     userId: Joi.number().integer().required(),
-            //     enterPrice: Joi.number().required(),
-            //     amount: Joi.number().integer().positive().required(),
-            //     takeProfit: Joi.string().pattern(/^\d+(\.\d+)?$/).required(),
-            //     stopLoss: Joi.string().pattern(/^\d+(\.\d+)?$/).required(),
-            //     type: Joi.string().valid('sell', 'buy').required(),
-            //     currentPrice: Joi.string().pattern(/^\d+(\.\d+)?$/).required(),
-            //     profit: Joi.string().pattern(/^-?\d+(\.\d+)?$/).allow(null),
-            //     createdAt: Joi.date().default(() => new Date(), 'current date'),
-            //     updatedAt: Joi.date().default(() => new Date(), 'current date'),
-            // })
-            // .required(),
+        post: Joi.object()
+            .keys({
+                pairId: Joi.number().integer().required(),
+                enterPrice: Joi.number().required(),
+                amount: Joi.number().required(),
+                takeProfit: Joi.string().optional(),
+                stopLoss: Joi.string().optional(),
+                type: Joi.string().valid('sell', 'buy').required(),
+            })
+            .required(),
         put: Joi.object()
             .keys({
                 firstName: Joi.string().optional(),

@@ -33,10 +33,6 @@ module.exports = class Users extends Sequelize.Model {
                 type: {
                     type: DataTypes.ENUM('head', 'shift', 'teamLead', 'user', 'buyer'),
                     defaultValue: 'user'
-                },
-                balance:{
-                    type: Sequelize.INTEGER,
-                    allowNull: true,
                 }
             },
             {

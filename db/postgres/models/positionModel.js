@@ -22,7 +22,7 @@ module.exports = class Positions extends Sequelize.Model {
                     type: DataTypes.INTEGER,
                     allowNull: false,
                     references: {
-                        model: 'Users',
+                        model: 'PlatformUsers',
                         key: 'id',
                     },
                     onUpdate: 'CASCADE',
@@ -49,7 +49,7 @@ module.exports = class Positions extends Sequelize.Model {
                     allowNull: false,
                 },
                 currentPrice: {
-                    type: DataTypes.STRING,
+                    type: DataTypes.FLOAT,
                     allowNull: false,
                 },
                 profit: {

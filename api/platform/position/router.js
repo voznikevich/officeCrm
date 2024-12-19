@@ -17,15 +17,15 @@ router.get(
     asyncHandler(controller.registration)
 );
 
-router.put('/',
-    // asyncHandler(middlewares.auth.user),
-    validator.main(schemas.router.put),
-    asyncHandler(controller.putUser)
-);
-
 router.post('/',
     asyncHandler(middlewares.auth.user),
     validator.main(schemas.router.post),
+    asyncHandler(controller.post)
+);
+
+router.put('/',
+    // asyncHandler(middlewares.auth.user),
+    validator.main(schemas.router.put),
     asyncHandler(controller.putUser)
 );
 

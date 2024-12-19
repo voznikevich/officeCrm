@@ -20,7 +20,7 @@ module.exports = {
                 type: Sequelize.INTEGER,
                 allowNull: false,
                 references: {
-                    model: 'Users',
+                    model: 'PlatformUsers',
                     key: 'id',
                 },
                 onUpdate: 'CASCADE',
@@ -47,7 +47,7 @@ module.exports = {
                 allowNull: false,
             },
             currentPrice: {
-                type: Sequelize.STRING,
+                type: Sequelize.FLOAT,
                 allowNull: false,
             },
             profit: {

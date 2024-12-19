@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const helper = require('../../../app/helpers/helper');
+const Joi = require("joi");
 
 const user = {
     get: async (connection, user) => {
@@ -16,39 +17,40 @@ const user = {
         };
     },
 
-    registration: async (connection, options) => {
-        const lead = await connection.Leads.findOne({
-            where: {id: options.leadId}
-        })
-
-        if (!lead) {
-            return helper.doom.error.leadNotFound();
-        }
-
-        const userPassword = helper.math.generatePassword();
-
-        const platformUser = await connection.PlatformUsers.create({
-            id: helper.math.generateNumericUUID(),
-            firstName: lead.userName.split(' ')[0] ?? '',
-            lastName: lead.userName.split(' ')[1] ?? '',
-            email: lead.email,
-            country: lead.country,
-            phone: lead.phone,
-            password: await bcrypt.hash(userPassword, 10),
-            lead: options.leadId
+    all: async (connection, user) => {
+        const userData = await connection.PlatformUsers.findOne({
+            where: {id: user.id},
+            attributes: {exclude: ['password', 'createdAt', 'updatedAt']}
         });
 
         return {
             success: true,
             result: {
-                platformUser,
-                userPassword,
-                message: 'User successfully created',
+                user: userData
             }
         };
     },
 
-    putUser: async (connection, options) => {
+    post: async (connection, options, user) => {
+        if (user.type === process.env.PLATFORM_USER_TYPE) {
+            await connection.Positions.create({
+                ...options,
+                id: helper.math.generateNumericUUID(),
+                userId: user.id,
+                currentPrice: options.amount,
+                profit: 0
+            });
+        }
+
+        return {
+            success: true,
+            result: {
+                message: 'Positions successfully created'
+            }
+        };
+    },
+
+    put: async (connection, options) => {
         const user = await connection.PlatformUsers.findOne({
             where: {id: options.userId}
         });
@@ -68,17 +70,17 @@ const user = {
 
     },
 
-    deleteUser: async (connection, options) => {
-        const existingUser = await connection.PlatformUsers.findOne({where: {id: options.userId}});
+    delete: async (connection, options) => {
+        const existingPosition = await connection.Positions.findOne({where: {id: options.userId}});
 
-        if (!existingUser) {
+        if (!existingPosition) {
             return {
                 success: false,
                 result: {message: 'User does not exist'}
             };
         }
 
-        await connection.PlatformUsers.destroy({where: {id: options.userId}})
+        await connection.Positions.destroy({where: {id: options.userId}})
 
         return {
             success: true,
