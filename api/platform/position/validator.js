@@ -11,7 +11,7 @@ const schemas = {
         post: Joi.object()
             .keys({
                 pairId: Joi.number().integer().required(),
-                enterPrice: Joi.number().required(),
+                // enterPrice: Joi.number().required(),
                 amount: Joi.number().required(),
                 takeProfit: Joi.string().optional(),
                 stopLoss: Joi.string().optional(),

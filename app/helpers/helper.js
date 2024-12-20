@@ -8,6 +8,8 @@ module.exports = {
   math: require('./math.helper'),
   country: require('./countries'),
   language: require('./languages'),
+  forex: require('./getForexPrice.helper'),
+  binance: require('./getBinancePrice.helper'),
 
   middlewares: {
     auth: require('../middlewares/auth.handler'),

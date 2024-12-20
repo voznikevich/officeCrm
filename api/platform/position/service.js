@@ -45,13 +45,51 @@ const position = {
 
     post: async (connection, options, user) => {
         if (user.type === process.env.PLATFORM_USER_TYPE) {
-            await connection.Positions.create({
-                ...options,
-                id: helper.math.generateNumericUUID(),
-                userId: user.id,
-                currentPrice: options.amount,
-                profit: 0
+            const pairData = await connection.Pairs.findOne({
+                where: {
+                    id: options.pairId
+                }
             });
+
+            if(pairData){
+                if(pairData.type === 'forex'){
+                    const fromCurrency = pairData.pair.split('/')[0];
+                    const toCurrency = pairData.pair.split('/')[1];
+
+                    const enterPrice = await helper.forex.getExchangeRate(fromCurrency, toCurrency);
+
+                    await connection.Positions.create({
+                        ...options,
+                        id: helper.math.generateNumericUUID(),
+                        userId: user.id,
+                        enterPrice,
+                        currentPrice: options.amount,
+                        profit: 0
+                    });
+                }
+
+                if(pairData.type === 'crypto'){
+                    const pair = pairData.pair.split('/').join('');
+                    const enterPrice = await helper.binance.getExchangeRate(pair);
+
+                    await connection.Positions.create({
+                        ...options,
+                        id: helper.math.generateNumericUUID(),
+                        userId: user.id,
+                        enterPrice,
+                        currentPrice: options.amount,
+                        profit: 0
+                    });
+                }
+            }
+
+            // await connection.Positions.create({
+            //     ...options,
+            //     id: helper.math.generateNumericUUID(),
+            //     userId: user.id,
+            //     currentPrice: options.amount,
+            //     profit: 0
+            // });
         }
 
         return {

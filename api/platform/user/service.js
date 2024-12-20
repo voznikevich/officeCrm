@@ -52,16 +52,16 @@ const user = {
         }
     },
 
-    putUser: async (connection, options) => {
-        const user = await connection.PlatformUsers.findOne({
-            where: {id: options.userId}
+    putUser: async (connection, options, user) => {
+        const platformUser = await connection.PlatformUsers.findOne({
+            where: {id: user.id}
         });
 
-        if (!user) {
+        if (!platformUser) {
             return helper.doom.error.accountNotFound();
         }
 
-        await user.update(options);
+        await platformUser.update(options);
 
         return {
             success: true,
