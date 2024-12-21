@@ -36,11 +36,11 @@ module.exports = {
             },
             takeProfit: {
                 type: Sequelize.STRING,
-                allowNull: false,
+                allowNull: true,
             },
             stopLoss: {
                 type: Sequelize.STRING,
-                allowNull: false,
+                allowNull: true,
             },
             type: {
                 type: Sequelize.ENUM('sell', 'buy'),

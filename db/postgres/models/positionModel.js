@@ -38,11 +38,11 @@ module.exports = class Positions extends Sequelize.Model {
                 },
                 takeProfit: {
                     type: DataTypes.STRING,
-                    allowNull: false,
+                    allowNull: true,
                 },
                 stopLoss: {
                     type: DataTypes.STRING,
-                    allowNull: false,
+                    allowNull: true,
                 },
                 type: {
                     type: DataTypes.ENUM('sell', 'buy'),
