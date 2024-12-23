@@ -37,7 +37,7 @@ const lead = {
                                 required: false,
                                 model: connection.Positions,
                                 as: "positions",
-                                attributes: ['id', 'pairId', 'enterPrice', 'amount', 'type', 'profit', 'isActive'],
+                                // attributes: ['id', 'pairId', 'enterPrice', 'amount', 'type', 'profit', 'isActive'],
                             }
                         ],
                     }
