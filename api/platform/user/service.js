@@ -36,7 +36,7 @@ const user = {
                 country: lead.country,
                 phone: lead.phone,
                 password: await bcrypt.hash(userPassword, 10),
-                lead: options.leadId,
+                lead_id: options.leadId,
                 owner: user.id
             });
             return {

@@ -97,6 +97,7 @@ const position = {
             //     currentPrice: options.amount,
             //     profit: 0
             // });
+
         }
 
         return {

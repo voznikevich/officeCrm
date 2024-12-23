@@ -27,6 +27,19 @@ const lead = {
                         model: connection.Users,
                         as: "user",
                         attributes: {exclude: ['password', 'refresh_token']},
+                    },
+                    {
+                        required: false,
+                        model: connection.PlatformUsers,
+                        as: "platformUser",
+                        include: [
+                            {
+                                required: false,
+                                model: connection.Positions,
+                                as: "positions",
+                                attributes: ['id', 'pairId', 'enterPrice', 'amount', 'type', 'profit', 'isActive'],
+                            }
+                        ],
                     }
                 ]
             });

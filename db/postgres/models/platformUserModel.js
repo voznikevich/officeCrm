@@ -36,7 +36,7 @@ module.exports = class PlatformUsers extends Sequelize.Model {
                     type: DataTypes.INTEGER,
                     defaultValue: 0
                 },
-                lead: {
+                lead_id: {
                     type: DataTypes.INTEGER,
                     allowNull: true,
                     references: {
@@ -65,12 +65,16 @@ module.exports = class PlatformUsers extends Sequelize.Model {
 
     static associate(models) {
         this.belongsTo(models.Leads, {
-            foreignKey: 'lead',
+            foreignKey: 'lead_id',
             as: "leadData"
         });
         this.belongsTo(models.Users, {
             foreignKey: 'owner',
             as: "crmUser"
+        });
+        this.hasMany(models.Positions, {
+            foreignKey: 'userId',
+            as: 'positions'
         });
     }
 };

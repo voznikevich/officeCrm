@@ -101,5 +101,9 @@ module.exports = class Leads extends Sequelize.Model {
             foreignKey: 'comment',
             as: "lastComment"
         });
+        this.hasOne(models.PlatformUsers, {
+            foreignKey: 'lead_id',
+            as: 'platformUser'
+        });
     }
 };

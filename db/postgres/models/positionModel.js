@@ -84,7 +84,7 @@ module.exports = class Positions extends Sequelize.Model {
             foreignKey: 'pairId',
             as: "pair"
         });
-        this.belongsTo(models.Users, {
+        this.belongsTo(models.PlatformUsers, {
             foreignKey: 'userId',
             as: "user"
         });

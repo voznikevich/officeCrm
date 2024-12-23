@@ -31,7 +31,7 @@ module.exports = {
                 type: Sequelize.STRING,
                 allowNull: false,
             },
-            lead: {
+            lead_id: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
                 references: {
