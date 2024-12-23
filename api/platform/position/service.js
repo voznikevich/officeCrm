@@ -45,14 +45,21 @@ const position = {
 
     post: async (connection, options, user) => {
         if (user.type === process.env.PLATFORM_USER_TYPE) {
+
+            const platformUser = await connection.PlatformUsers.findOne({where: {id: user.id}});
+
+            if (platformUser.balance < 0 || platformUser.balance < options.amount) {
+                return helper.doom.error.balanceIsLess()
+            }
+
             const pairData = await connection.Pairs.findOne({
                 where: {
                     id: options.pairId
                 }
             });
 
-            if(pairData){
-                if(pairData.type === 'forex'){
+            if (pairData) {
+                if (pairData.type === 'forex') {
                     const fromCurrency = pairData.pair.split('/')[0];
                     const toCurrency = pairData.pair.split('/')[1];
 
@@ -68,7 +75,7 @@ const position = {
                     });
                 }
 
-                if(pairData.type === 'crypto'){
+                if (pairData.type === 'crypto') {
                     const pair = pairData.pair.split('/').join('');
                     const enterPrice = await helper.binance.getExchangeRate(pair);
 

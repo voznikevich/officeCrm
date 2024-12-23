@@ -15,6 +15,7 @@ const errorCode = {
     accountNotFound: 140,
     leadNotFound: 141,
     positionNotFound: 142,
+    balanceIsLess: 143,
     accountNotConfirmed: 150,
     accountWasBlocked: 151,
     accessDenied: 403,
@@ -141,6 +142,16 @@ const error = {
             message: 'Position was not found.',
             error: 'Position not found',
             errorCode: errorCode.positionNotFound
+        };
+    },
+
+    balanceIsLess: () => {
+        return {
+            statusCode: StatusCodes.CONFLICT,
+            success: false,
+            message: 'The amount on your balance is less than the transaction amount',
+            error: 'The amount on your balance is less than the transaction amount',
+            errorCode: errorCode.balanceIsLess
         };
     },
 
