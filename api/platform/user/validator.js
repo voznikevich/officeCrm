@@ -15,6 +15,7 @@ const schemas = {
                 country: Joi.string().optional(),
                 email: Joi.string().email().optional(),
                 phone: Joi.string().allow(null),
+                balance: Joi.number().optional()
             })
             .required(),
         deleteUser: Joi.object()
