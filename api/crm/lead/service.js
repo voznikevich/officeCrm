@@ -140,23 +140,42 @@ const lead = {
             ];
 
             if (user.type === 'head' || user.type === 'shift') {
-                const {count, rows: leads} = await connection.Leads.findAndCountAll({
-                    where,
-                    attributes: defaultAttributes,
-                    include: defaultInclude,
-                    limit,
-                    offset,
-                    order: [['createdAt', 'DESC']],
-                });
+                // const {count, rows: leads} = await connection.Leads.findAndCountAll({
+                //     where,
+                //     attributes: defaultAttributes,
+                //     include: defaultInclude,
+                //     limit,
+                //     offset,
+                //     order: [['createdAt', 'DESC']],
+                // });
 
-                return {
-                    success: true,
-                    result: {
-                        total: count,
-                        totalPages: Math.ceil(count / limit),
-                        leads,
-                    },
-                };
+                // const order = [['createdAt', 'DESC']];
+                //
+                // if (options.sortBy === 'lastComment' && options.sortOrder) {
+                //     order.unshift([
+                //         { model: connection.Comments, as: 'lastComment' },
+                //         'createdAt',
+                //         options.sortOrder.toUpperCase() === 'ASC' ? 'ASC' : 'DESC',
+                //     ]);
+                // }
+                //
+                // const { count, rows: leads } = await connection.Leads.findAndCountAll({
+                //     where,
+                //     attributes: defaultAttributes,
+                //     include: defaultInclude,
+                //     limit,
+                //     offset,
+                //     order,
+                // });
+                //
+                // return {
+                //     success: true,
+                //     result: {
+                //         total: count,
+                //         totalPages: Math.ceil(count / limit),
+                //         leads,
+                //     },
+                // };
             }
 
             if (user.type === 'teamLead') {
@@ -175,68 +194,142 @@ const lead = {
                     return helper.doom.error.managerNotFound();
                 }
 
-                const {count, rows: leads} = await connection.Leads.findAndCountAll({
-                    where,
-                    attributes: defaultAttributes,
-                    include: defaultInclude,
-                    limit,
-                    offset,
-                    order: [['createdAt', 'DESC']],
-                });
-
-                return {
-                    success: true,
-                    result: {
-                        total: count,
-                        totalPages: Math.ceil(count / limit),
-                        leads,
-                    },
-                };
+                // const order = [['createdAt', 'DESC']];
+                //
+                // if (options.sortBy === 'lastComment' && options.sortOrder) {
+                //     order.unshift([
+                //         { model: connection.Comments, as: 'lastComment' },
+                //         'createdAt',
+                //         options.sortOrder.toUpperCase() === 'ASC' ? 'ASC' : 'DESC',
+                //     ]);
+                // }
+                //
+                // const { count, rows: leads } = await connection.Leads.findAndCountAll({
+                //     where,
+                //     attributes: defaultAttributes,
+                //     include: defaultInclude,
+                //     limit,
+                //     offset,
+                //     order,
+                // });
+                //
+                // return {
+                //     success: true,
+                //     result: {
+                //         total: count,
+                //         totalPages: Math.ceil(count / limit),
+                //         leads,
+                //     },
+                // };
             }
 
             if (user.type === 'user') {
                 where.manager = user.id;
 
-                const {count, rows: leads} = await connection.Leads.findAndCountAll({
-                    where,
-                    attributes: defaultAttributes,
-                    include: defaultInclude,
-                    limit,
-                    offset,
-                    order: [['createdAt', 'DESC']],
-                });
-
-                return {
-                    success: true,
-                    result: {
-                        total: count,
-                        totalPages: Math.ceil(count / limit),
-                        leads,
-                    },
-                };
+                // const {count, rows: leads} = await connection.Leads.findAndCountAll({
+                //     where,
+                //     attributes: defaultAttributes,
+                //     include: defaultInclude,
+                //     limit,
+                //     offset,
+                //     order: [['createdAt', 'DESC']],
+                // });
+                // const order = [['createdAt', 'DESC']];
+                //
+                // if (options.sortBy === 'lastComment' && options.sortOrder) {
+                //     order.unshift([
+                //         { model: connection.Comments, as: 'lastComment' },
+                //         'createdAt',
+                //         options.sortOrder.toUpperCase() === 'ASC' ? 'ASC' : 'DESC',
+                //     ]);
+                // }
+                //
+                // const { count, rows: leads } = await connection.Leads.findAndCountAll({
+                //     where,
+                //     attributes: defaultAttributes,
+                //     include: defaultInclude,
+                //     limit,
+                //     offset,
+                //     order,
+                // });
+                //
+                // return {
+                //     success: true,
+                //     result: {
+                //         total: count,
+                //         totalPages: Math.ceil(count / limit),
+                //         leads,
+                //     },
+                // };
             }
 
             if (user.type === 'buyer') {
                 where.affiliate = options.affiliateId;
 
-                const {count, rows: leads} = await connection.Leads.findAndCountAll({
-                    where,
-                    attributes: defaultAttributes,
-                    include: defaultInclude,
-                    limit,
-                    offset,
-                    order: [['createdAt', 'DESC']],
-                });
+                // const {count, rows: leads} = await connection.Leads.findAndCountAll({
+                //     where,
+                //     attributes: defaultAttributes,
+                //     include: defaultInclude,
+                //     limit,
+                //     offset,
+                //     order: [['createdAt', 'DESC']],
+                // });
 
-                return {
-                    success: true,
-                    result: {
-                        total: count,
-                        totalPages: Math.ceil(count / limit),
-                        leads,
-                    },
-                };
+                // const order = [['createdAt', 'DESC']];
+                //
+                // if (options.sortBy === 'lastComment' && options.sortOrder) {
+                //     order.unshift([
+                //         { model: connection.Comments, as: 'lastComment' },
+                //         'createdAt',
+                //         options.sortOrder.toUpperCase() === 'ASC' ? 'ASC' : 'DESC',
+                //     ]);
+                // }
+                //
+                // const { count, rows: leads } = await connection.Leads.findAndCountAll({
+                //     where,
+                //     attributes: defaultAttributes,
+                //     include: defaultInclude,
+                //     limit,
+                //     offset,
+                //     order,
+                // });
+                //
+                // return {
+                //     success: true,
+                //     result: {
+                //         total: count,
+                //         totalPages: Math.ceil(count / limit),
+                //         leads,
+                //     },
+                // };
             }
+
+            const order = [['createdAt', 'DESC']];
+            if (options.sortBy === 'lastComment' && options.sortOrder) {
+                order.unshift([
+                    { model: connection.Comments, as: 'lastComment' },
+                    'createdAt',
+                    options.sortOrder.toUpperCase() === 'ASC' ? 'ASC' : 'DESC',
+                ]);
+            }
+
+            const { count, rows: leads } = await connection.Leads.findAndCountAll({
+                where,
+                attributes: defaultAttributes,
+                include: defaultInclude,
+                limit,
+                offset,
+                order,
+            });
+
+            return {
+                success: true,
+                result: {
+                    total: count,
+                    totalPages: Math.ceil(count / limit),
+                    leads,
+                },
+            };
         },
 
         post: async (connection, options) => {

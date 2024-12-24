@@ -35,6 +35,8 @@ const schemas = {
                 country: Joi.string().optional(),
                 language: Joi.string().optional(),
                 managerId: Joi.number().integer().optional(),
+                sortBy: Joi.string().optional(),
+                sortOrder: Joi.string().optional(),
                 dateRange: Joi.array()
                     .items(Joi.string().isoDate())
                     .length(2)
