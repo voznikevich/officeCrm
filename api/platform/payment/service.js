@@ -1,5 +1,5 @@
 const helper = require('../../../app/helpers/helper');
-const {Sequelize} = require("sequelize");
+const {Sequelize, Op} = require("sequelize");
 
 const position = {
     all: async (connection, options, user) => {
@@ -22,12 +22,46 @@ const position = {
     },
 
     put: async (connection, options, user) => {
-        if (user.type === process.env.PLATFORM_USER_TYPE) {
+        if (user.type === 'head' || user.type === 'shift') {
             await connection.Payments.update({status: options.status}, {
                 where: {id: options.paymentId},
             });
-
         }
+
+        if (user.type === 'teamLead') {
+            const data = await connection.Payments.findOne({
+                where: {id: options.paymentId},
+                include: [
+                    {
+                        required: false,
+                        model: connection.PlatformUsers,
+                        as: "platformUser",
+                        include: [
+                            {
+                                required: false,
+                                model: connection.Leads,
+                                as: "leadData",
+                            }
+                        ]
+                    }
+                ]
+            })
+            const manager = data.platformUser.leadData.manager
+            const users = await connection.Users.findAll({
+                where: {
+                    group: user.group,
+                    type: {[Op.or]: ["user", "teamLead"]}
+                }
+            });
+            const userIds = users.map(u => u.id);
+            const isManagerInGroup = userIds.includes(manager);
+
+            if (!isManagerInGroup) return helper.doom.error.accessDenied()
+            await connection.Payments.update({status: options.status}, {
+                where: {id: options.paymentId},
+            });
+        }
+
         return {
             success: true,
             result: {
