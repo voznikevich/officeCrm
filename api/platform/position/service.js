@@ -32,7 +32,7 @@ const position = {
                 model: connection.Pairs,
                 as: "pair",
             }],
-            attributes: {exclude: ['createdAt', 'updatedAt', 'pairId']}
+            attributes: {exclude: ['updatedAt', 'pairId']}
         });
 
         return {
