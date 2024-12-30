@@ -15,6 +15,7 @@ const errorCode = {
     accountNotFound: 140,
     leadNotFound: 141,
     positionNotFound: 142,
+    addressOrCardNotFound: 143,
     balanceIsLess: 143,
     accountNotConfirmed: 150,
     accountWasBlocked: 151,
@@ -142,6 +143,16 @@ const error = {
             message: 'Position was not found.',
             error: 'Position not found',
             errorCode: errorCode.positionNotFound
+        };
+    },
+
+    addressOrCardNotFound: () => {
+        return {
+            statusCode: StatusCodes.NOT_FOUND,
+            success: false,
+            message: 'You need type wallet address or card number for pay out',
+            error: 'You need type wallet address or card number for pay out',
+            errorCode: errorCode.addressOrCardNotFound
         };
     },
 

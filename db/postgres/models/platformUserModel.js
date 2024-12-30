@@ -76,5 +76,9 @@ module.exports = class PlatformUsers extends Sequelize.Model {
             foreignKey: 'userId',
             as: 'positions'
         });
+        this.hasMany(models.Payments, {
+            foreignKey: 'platform_user',
+            as: 'payments',
+        });
     }
 };
