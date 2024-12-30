@@ -8,7 +8,7 @@ const controller = require('./controller');
 router.get(
     '/all',
     validator.main(schemas.router.all),
-    asyncHandler(middlewares.auth.user),
+    asyncHandler(middlewares.auth.admin),
     asyncHandler(controller.all)
 );
 
