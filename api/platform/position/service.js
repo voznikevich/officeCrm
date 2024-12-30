@@ -88,6 +88,20 @@ const position = {
                         profit: 0
                     });
                 }
+
+                if (pairData.type === 'stock') {
+                    const enterPrice = await helper.stock.getExchangeRate(pairData.pair);
+
+                    await connection.Positions.create({
+                        ...options,
+                        id: helper.math.generateNumericUUID(),
+                        userId: user.id,
+                        enterPrice,
+                        currentPrice: options.amount,
+                        profit: 0
+                    });
+                }
+
             }
 
             // await connection.Positions.create({

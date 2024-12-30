@@ -10,6 +10,7 @@ module.exports = {
   language: require('./languages'),
   forex: require('./getForexPrice.helper'),
   binance: require('./getBinancePrice.helper'),
+  stock: require('./getStockPrice.helper'),
 
   middlewares: {
     auth: require('../middlewares/auth.handler'),
