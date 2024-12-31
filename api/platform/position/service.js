@@ -117,6 +117,10 @@ const position = {
                 return helper.doom.error.accessDenied();
             }
 
+            if (platformUser.balance < 0 || platformUser.balance < options.amount) {
+                return helper.doom.error.balanceIsLess()
+            }
+
             const pairData = await connection.Pairs.findOne({
                 where: {
                     id: options.pairId
