@@ -33,7 +33,7 @@ module.exports = class PlatformUsers extends Sequelize.Model {
                     allowNull: false
                 },
                 balance: {
-                    type: DataTypes.INTEGER,
+                    type: DataTypes.FLOAT,
                     defaultValue: 0
                 },
                 lead_id: {

@@ -13,7 +13,7 @@ router.get('/',
 
 router.get(
     '/all',
-    asyncHandler(middlewares.auth.user),
+    // asyncHandler(middlewares.auth.user),
     asyncHandler(controller.all)
 );
 

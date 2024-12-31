@@ -21,5 +21,3 @@ app.use(middlewares.notFound);
 app.use(middlewares.error);
 
 module.exports = app;
-
-

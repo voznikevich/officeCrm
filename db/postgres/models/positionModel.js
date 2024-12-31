@@ -19,7 +19,7 @@ module.exports = class Positions extends Sequelize.Model {
                     onDelete: 'CASCADE',
                 },
                 userId: {
-                    type: DataTypes.INTEGER,
+                    type: DataTypes.BIGINT,
                     allowNull: false,
                     references: {
                         model: 'PlatformUsers',

@@ -1,7 +1,7 @@
 module.exports = {
     up: async (queryInterface, Sequelize) => {
         await queryInterface.addColumn('PlatformUsers', 'balance', {
-            type: Sequelize.INTEGER,
+            type: Sequelize.FLOAT,
             defaultValue: 0
         });
         await queryInterface.addColumn('PlatformUsers', 'owner', {
