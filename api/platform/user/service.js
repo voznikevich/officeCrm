@@ -5,7 +5,13 @@ const user = {
     get: async (connection, options) => {
         const userData = await connection.PlatformUsers.findOne({
             where: {lead_id: options.leadId},
-            attributes: {exclude: ['password', 'createdAt', 'updatedAt']}
+            attributes: {exclude: ['password', 'createdAt', 'updatedAt']},
+            include: [
+                {
+                    model: connection.Positions,
+                    as: 'positions',
+                    required: false
+                }]
         });
 
         return {
