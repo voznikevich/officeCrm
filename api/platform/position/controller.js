@@ -24,8 +24,7 @@ const position = {
     },
 
     post: async (req, res) => {
-        await controller.sendJson(
-            res,
+        await controller.sendJson(res,
             async (connection) => {
                 return await service.post(connection, req.options, req.user);
             },

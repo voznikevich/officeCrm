@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 
 const { header, middlewares } = require('./app/helpers/helper');
 const router = require('./app/router');
+require('./app/cron/updateProfit');
 
 const app = express();
 

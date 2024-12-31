@@ -71,7 +71,7 @@ const position = {
                         userId: user.id,
                         enterPrice,
                         currentPrice: enterPrice,
-                        profit: 0
+                        profit: options.amount * 0.1
                     });
                 }
 
@@ -85,7 +85,7 @@ const position = {
                         userId: user.id,
                         enterPrice,
                         currentPrice: enterPrice,
-                        profit: 0
+                        profit: options.amount * 0.1
                     });
                 }
 
@@ -98,7 +98,7 @@ const position = {
                         userId: user.id,
                         enterPrice,
                         currentPrice: enterPrice,
-                        profit: 0
+                        profit: options.amount * 0.1
                     });
                 }
 
