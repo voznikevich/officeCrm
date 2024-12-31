@@ -175,7 +175,23 @@ const lead = {
                 where.affiliate = options.affiliateId;
             }
 
-            const order = [['createdAt', 'DESC']];
+            // const order = [['createdAt', 'DESC']];
+            //
+            // if (options.sortBy === 'lastComment' && options.sortOrder) {
+            //     order.unshift([
+            //         {model: connection.Comments, as: 'lastComment'},
+            //         'createdAt',
+            //         options.sortOrder.toUpperCase() === 'ASC' ? 'ASC' : 'DESC',
+            //     ]);
+            // }
+            const order = [];
+
+            if (options.sortBy === 'createdAt') {
+                order.push(['createdAt', options.sortOrder === 'ASC' ? 'ASC' : 'DESC']);
+            } else {
+                order.push(['createdAt', 'DESC']);
+            }
+
             if (options.sortBy === 'lastComment' && options.sortOrder) {
                 order.unshift([
                     {model: connection.Comments, as: 'lastComment'},
