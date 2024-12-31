@@ -26,7 +26,6 @@ const position = {
 
     all: async (connection, user) => {
         const positions = await connection.Positions.findAll({
-            // where: {userId: user.id},
             where: {userId: user.id},
             include: [{
                 required: false,
