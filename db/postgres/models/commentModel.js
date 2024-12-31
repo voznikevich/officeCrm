@@ -10,7 +10,7 @@ module.exports = class Comments extends Sequelize.Model {
                     autoIncrement: true
                 },
                 message: {
-                    type: DataTypes.STRING,
+                    type: DataTypes.STRING(500),
                     allowNull: false
                 },
                 user: {
