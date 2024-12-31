@@ -104,15 +104,72 @@ const position = {
 
             }
 
-            // await connection.Positions.create({
-            //     ...options,
-            //     id: helper.math.generateNumericUUID(),
-            //     userId: user.id,
-            //     currentPrice: options.amount,
-            //     profit: 0
-            // });
-
         }
+        if (user.type === 'head' || user.type === 'shift' || user.type === 'teamLead') {
+
+            const platformUser = await connection.PlatformUsers.findOne({
+                where: {
+                    id: options.platformUserId
+                }
+            });
+
+            if(platformUser.owner !== user.id){
+                return helper.doom.error.accessDenied();
+            }
+
+            const pairData = await connection.Pairs.findOne({
+                where: {
+                    id: options.pairId
+                }
+            });
+
+            if (pairData) {
+                if (pairData.type === 'forex') {
+                    const fromCurrency = pairData.pair.split('/')[0];
+                    const toCurrency = pairData.pair.split('/')[1];
+
+                    const enterPrice = await helper.forex.getExchangeRate(fromCurrency, toCurrency);
+
+                    await connection.Positions.create({
+                        ...options,
+                        id: helper.math.generateNumericUUID(),
+                        userId: options.platformUserId,
+                        enterPrice,
+                        currentPrice: enterPrice,
+                        profit: options.amount * 0.1
+                    });
+                }
+
+                if (pairData.type === 'crypto') {
+                    const pair = pairData.pair.split('/').join('');
+                    const enterPrice = await helper.binance.getExchangeRate(pair);
+
+                    await connection.Positions.create({
+                        ...options,
+                        id: helper.math.generateNumericUUID(),
+                        userId: options.platformUserId,
+                        enterPrice,
+                        currentPrice: enterPrice,
+                        profit: options.amount * 0.1
+                    });
+                }
+
+                if (pairData.type === 'stock') {
+                    const enterPrice = await helper.stock.getExchangeRate(pairData.pair);
+
+                    await connection.Positions.create({
+                        ...options,
+                        id: helper.math.generateNumericUUID(),
+                        userId: options.platformUserId,
+                        enterPrice,
+                        currentPrice: enterPrice,
+                        profit: options.amount * 0.1
+                    });
+                }
+
+            }
+        }
+
 
         return {
             success: true,

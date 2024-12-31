@@ -16,6 +16,7 @@ const schemas = {
                 takeProfit: Joi.string().optional(),
                 stopLoss: Joi.string().optional(),
                 type: Joi.string().valid('sell', 'buy').required(),
+                platformUserId: Joi.number().optional(),
             })
             .required(),
         put: Joi.object()
