@@ -44,136 +44,64 @@ const position = {
     },
 
     post: async (connection, options, user) => {
-        if (user.type === process.env.PLATFORM_USER_TYPE) {
+        const createPosition = async (pairData, userId, amount) => {
+            let enterPrice;
 
-            const platformUser = await connection.PlatformUsers.findOne({where: {id: user.id}});
-
-            if (platformUser.balance < 0 || platformUser.balance < options.amount) {
-                return helper.doom.error.balanceIsLess()
+            switch (pairData.type) {
+                case 'forex':
+                    const [fromCurrency, toCurrency] = pairData.pair.split('/');
+                    enterPrice = await helper.forex.getExchangeRate(fromCurrency, toCurrency);
+                    break;
+                case 'crypto':
+                    const pair = pairData.pair.replace('/', '');
+                    enterPrice = await helper.binance.getExchangeRate(pair);
+                    break;
+                case 'stock':
+                    enterPrice = await helper.stock.getExchangeRate(pairData.pair);
+                    break;
             }
 
-            const pairData = await connection.Pairs.findOne({
-                where: {
-                    id: options.pairId
-                }
+            await connection.Positions.create({
+                ...options,
+                id: helper.math.generateNumericUUID(),
+                userId,
+                enterPrice,
+                currentPrice: enterPrice,
+                profit: amount * 0.1
             });
+        };
 
-            if (pairData) {
-                if (pairData.type === 'forex') {
-                    const fromCurrency = pairData.pair.split('/')[0];
-                    const toCurrency = pairData.pair.split('/')[1];
+        let platformUserId = user.id;
 
-                    const enterPrice = await helper.forex.getExchangeRate(fromCurrency, toCurrency);
-
-                    await connection.Positions.create({
-                        ...options,
-                        id: helper.math.generateNumericUUID(),
-                        userId: user.id,
-                        enterPrice,
-                        currentPrice: enterPrice,
-                        profit: options.amount * 0.1
-                    });
-                }
-
-                if (pairData.type === 'crypto') {
-                    const pair = pairData.pair.split('/').join('');
-                    const enterPrice = await helper.binance.getExchangeRate(pair);
-
-                    await connection.Positions.create({
-                        ...options,
-                        id: helper.math.generateNumericUUID(),
-                        userId: user.id,
-                        enterPrice,
-                        currentPrice: enterPrice,
-                        profit: options.amount * 0.1
-                    });
-                }
-
-                if (pairData.type === 'stock') {
-                    const enterPrice = await helper.stock.getExchangeRate(pairData.pair);
-
-                    await connection.Positions.create({
-                        ...options,
-                        id: helper.math.generateNumericUUID(),
-                        userId: user.id,
-                        enterPrice,
-                        currentPrice: enterPrice,
-                        profit: options.amount * 0.1
-                    });
-                }
-
-            }
-
-        }
         if (user.type === 'head' || user.type === 'shift' || user.type === 'teamLead') {
-
             const platformUser = await connection.PlatformUsers.findOne({
-                where: {
-                    id: options.platformUserId
-                }
+                where: { id: options.platformUserId }
             });
 
-            if(platformUser.owner !== user.id){
+            if (!platformUser || platformUser.owner !== user.id) {
                 return helper.doom.error.accessDenied();
             }
 
-            if (platformUser.balance < 0 || platformUser.balance < options.amount) {
-                return helper.doom.error.balanceIsLess()
-            }
-
-            const pairData = await connection.Pairs.findOne({
-                where: {
-                    id: options.pairId
-                }
-            });
-
-            if (pairData) {
-                if (pairData.type === 'forex') {
-                    const fromCurrency = pairData.pair.split('/')[0];
-                    const toCurrency = pairData.pair.split('/')[1];
-
-                    const enterPrice = await helper.forex.getExchangeRate(fromCurrency, toCurrency);
-
-                    await connection.Positions.create({
-                        ...options,
-                        id: helper.math.generateNumericUUID(),
-                        userId: options.platformUserId,
-                        enterPrice,
-                        currentPrice: enterPrice,
-                        profit: options.amount * 0.1
-                    });
-                }
-
-                if (pairData.type === 'crypto') {
-                    const pair = pairData.pair.split('/').join('');
-                    const enterPrice = await helper.binance.getExchangeRate(pair);
-
-                    await connection.Positions.create({
-                        ...options,
-                        id: helper.math.generateNumericUUID(),
-                        userId: options.platformUserId,
-                        enterPrice,
-                        currentPrice: enterPrice,
-                        profit: options.amount * 0.1
-                    });
-                }
-
-                if (pairData.type === 'stock') {
-                    const enterPrice = await helper.stock.getExchangeRate(pairData.pair);
-
-                    await connection.Positions.create({
-                        ...options,
-                        id: helper.math.generateNumericUUID(),
-                        userId: options.platformUserId,
-                        enterPrice,
-                        currentPrice: enterPrice,
-                        profit: options.amount * 0.1
-                    });
-                }
-
-            }
+            platformUserId = options.platformUserId;
         }
 
+        const platformUser = await connection.PlatformUsers.findOne({
+            where: { id: platformUserId }
+        });
+
+        if (!platformUser || platformUser.balance < options.amount) {
+            return helper.doom.error.balanceIsLess();
+        }
+
+        const pairData = await connection.Pairs.findOne({
+            where: { id: options.pairId }
+        });
+
+        if (!pairData) {
+            return helper.doom.error.pairNotFound();
+        }
+
+        await createPosition(pairData, platformUserId, options.amount);
 
         return {
             success: true,
