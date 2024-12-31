@@ -129,7 +129,6 @@ const lead = {
                     required: false,
                     model: connection.Comments,
                     as: "lastComment",
-                    separate: true,
                     attributes: ['id', 'message', 'createdAt']
                 },
                 {
