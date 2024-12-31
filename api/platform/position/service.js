@@ -70,7 +70,7 @@ const position = {
                         id: helper.math.generateNumericUUID(),
                         userId: user.id,
                         enterPrice,
-                        currentPrice: options.amount,
+                        currentPrice: enterPrice,
                         profit: 0
                     });
                 }
@@ -84,7 +84,7 @@ const position = {
                         id: helper.math.generateNumericUUID(),
                         userId: user.id,
                         enterPrice,
-                        currentPrice: options.amount,
+                        currentPrice: enterPrice,
                         profit: 0
                     });
                 }
@@ -97,7 +97,7 @@ const position = {
                         id: helper.math.generateNumericUUID(),
                         userId: user.id,
                         enterPrice,
-                        currentPrice: options.amount,
+                        currentPrice: enterPrice,
                         profit: 0
                     });
                 }
