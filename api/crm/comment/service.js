@@ -11,7 +11,7 @@ const comment = {
                 attributes: ['id', 'userName', 'email']
             }],
             attributes: ['id', 'message', 'createdAt'],
-            limit: options.limit || 10,
+            limit: options.limit || 50,
             offset: options.page ? (options.page - 1) * options.limit : 0,
             order: [['createdAt', 'DESC']],
         });
