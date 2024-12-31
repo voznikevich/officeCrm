@@ -8,6 +8,11 @@ const schemas = {
                 leadId: Joi.number().required(),
             })
             .required(),
+        get: Joi.object()
+            .keys({
+                leadId: Joi.number().required(),
+            })
+            .required(),
         putUser: Joi.object()
             .keys({
                 firstName: Joi.string().optional(),

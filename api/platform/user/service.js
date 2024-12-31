@@ -2,9 +2,9 @@ const bcrypt = require('bcryptjs');
 const helper = require('../../../app/helpers/helper');
 
 const user = {
-    get: async (connection, user) => {
+    get: async (connection, options) => {
         const userData = await connection.PlatformUsers.findOne({
-            where: {id: user.id},
+            where: {lead_id: options.leadId},
             attributes: {exclude: ['password', 'createdAt', 'updatedAt']}
         });
 

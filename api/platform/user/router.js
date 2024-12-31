@@ -14,6 +14,7 @@ router.post(
 
 router.get('/',
     asyncHandler(middlewares.auth.user),
+    validator.main(schemas.router.get),
     asyncHandler(controller.get));
 
 router.put('/',
