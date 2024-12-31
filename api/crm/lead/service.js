@@ -129,6 +129,7 @@ const lead = {
                     required: false,
                     model: connection.Comments,
                     as: "lastComment",
+                    separate: true,
                     attributes: ['id', 'message', 'createdAt']
                 },
                 {
@@ -175,15 +176,6 @@ const lead = {
                 where.affiliate = options.affiliateId;
             }
 
-            // const order = [['createdAt', 'DESC']];
-            //
-            // if (options.sortBy === 'lastComment' && options.sortOrder) {
-            //     order.unshift([
-            //         {model: connection.Comments, as: 'lastComment'},
-            //         'createdAt',
-            //         options.sortOrder.toUpperCase() === 'ASC' ? 'ASC' : 'DESC',
-            //     ]);
-            // }
             const order = [];
 
             if (options.sortBy === 'createdAt') {
