@@ -78,7 +78,7 @@ const position = {
                 where: { id: options.platformUserId }
             });
 
-            if (!platformUser || platformUser.owner !== user.id) {
+            if (!platformUser || (platformUser.owner !== user.id && user.type === 'teamLead')) {
                 return helper.doom.error.accessDenied();
             }
 
