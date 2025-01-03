@@ -10,7 +10,7 @@ const schemas = {
             .required(),
         get: Joi.object()
             .keys({
-                leadId: Joi.number().required(),
+                leadId: Joi.number().optional(),
             })
             .required(),
         putUser: Joi.object()

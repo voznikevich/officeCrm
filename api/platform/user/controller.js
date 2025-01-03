@@ -7,7 +7,7 @@ const user = {
         await controller.sendJson(
             res,
             async (connection) => {
-                return await service.get(connection, req.options);
+                return await service.get(connection, req.options, req.user);
             },
             StatusCodes.OK
         );

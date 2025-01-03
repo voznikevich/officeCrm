@@ -2,17 +2,29 @@ const bcrypt = require('bcryptjs');
 const helper = require('../../../app/helpers/helper');
 
 const user = {
-    get: async (connection, options) => {
+    get: async (connection, options, user) => {
+        const whereClause = options.leadId ?
+            {lead_id: options.leadId} :
+            (user.type === process.env.PLATFORM_USER_TYPE && !options.leadId)
+                ? {id: user.id}
+                : null;
+
+        if (!whereClause) {
+            return helper.doom.error.accessDenied();
+        }
+
         const userData = await connection.PlatformUsers.findOne({
-            where: {lead_id: options.leadId},
+            where: whereClause,
             attributes: {exclude: ['password', 'createdAt', 'updatedAt']},
             include: [
                 {
                     model: connection.Positions,
                     as: 'positions',
                     required: false
-                }]
+                }
+            ]
         });
+
 
         return {
             success: true,
